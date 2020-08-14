@@ -1,0 +1,31 @@
+#miNavbar {
+  align-items: center;
+  padding: .2rem .5rem .2rem .5rem;
+  background-color: rgba(0, 0, 0, .1);
+}
+
+.bg-dark,
+.navbar-light {
+  transition: all 1s ease
+}
+
+.logoName {
+  color: white;
+  font-size: 2.2rem;
+  padding: 0;
+}
+
+.navbar-nav {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.social a {
+  color: black;
+  font-size: 2rem;
+  padding: 0 10px;
+}
+
+.social a:hover {
+  color: #fff;
+}
