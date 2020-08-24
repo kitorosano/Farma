@@ -94,7 +94,7 @@
 
                 <!-- <h3>Registro de Farmacias</h3>
 
-                <form class="d-flex flex-column" action="agregar_farmacia.php" method="POST">
+                <form class="d-flex flex-column" action="files/agregar_farmacia.php" method="POST">
                     <input class="form-control m-1" type="text" name="codFarma" placeholder="Ingresa Codigo">
                     <input class="form-control m-1" type="text" name="nameFarma" placeholder="Ingresa Nombre">
                     <input class="form-control m-1" type="password" name="passFarma" placeholder="Ingresa Contraseña">
@@ -120,7 +120,7 @@
                     </form>
 
                     <br><br><br>
-                    <a href="../" class="btn btn-link">Volver</button>
+                    <a href="<?php echo $_SERVER['DOCUMENT_ROOT'] ?>" class="btn btn-link">Volver</button>
 
             </div>
         </div>
@@ -145,7 +145,7 @@
                 </div>
 
                 <br><br>
-                <a href="../logout.php">Cerrar sesion</a>
+                <a href="logout.php">Cerrar sesion</a>
             </div>
 
             <!-- <div id="MenuPedido" class="container" style="display:none">

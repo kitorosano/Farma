@@ -6,4 +6,3 @@ $_SESSION = array(); //reinicializamos el array de todas las sesiones de la pagw
 session_destroy(); //destruid al usuario/session
 
 header('Location: .');
-?>

@@ -93,15 +93,17 @@
             <div class="container">
                 <br>
 
-                <h3>Registro de Usuario</h3>
+                <div class="container" style="display: none;">
+                    <h3>Registro de Usuario</h3>
 
-                <form class="d-flex flex-column" action="agregar_usuario.php" method="POST">
-                    <input class="form-control m-1" type="text" name="ciUser" placeholder="Ingresa Documento">
-                    <input class="form-control m-1" type="text" name="nameUser" placeholder="Ingresa Nombre">
-                    <input class="form-control m-1" type="password" name="passUser" placeholder="Ingresa Contraseña">
-                    <input class="form-control m-1" type="password" name="passUser2" placeholder="Ingresa nuevamente la contraseña">
-                    <button class="btn btn-primary m-2" type="submit">Guardar</button>
-                </form>
+                    <form class="d-flex flex-column" action="files/agregar_usuario.php" method="POST">
+                        <input class="form-control m-1" type="text" name="ciUser" placeholder="Ingresa Documento">
+                        <input class="form-control m-1" type="text" name="nameUser" placeholder="Ingresa Nombre">
+                        <input class="form-control m-1" type="password" name="passUser" placeholder="Ingresa Contraseña">
+                        <input class="form-control m-1" type="password" name="passUser2" placeholder="Ingresa nuevamente la contraseña">
+                        <button class="btn btn-primary m-2" type="submit">Guardar</button>
+                    </form>
+                </div>
 
 
                 <h4 class="mb-4">Inicio de Sesion</h2>
@@ -116,7 +118,7 @@
                         <input type="password" class="form-control mb-3 required input" name="passUser" autocomplete="false" value="">
                         <button class="btn btn-primary float-right" type="submit">Entrar</button>
 
-                        <a href="to test/farmacias.php">Iniciar como farmacia?</a>
+                        <a href="farmacias.php">Iniciar como farmacia?</a>
                     </form>
 
                     <br><br><br>
@@ -132,7 +134,7 @@
     <?php
     if (isset($_SESSION['user'])) :
 
-        include_once "conexion.php";
+        include_once "includes/conexion.php";
 
         //Leer de la BD y obtener los datos del usuario
         $consulta = $pdo->prepare("SELECT *

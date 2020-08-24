@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once 'conexion.php';
+include_once 'includes/conexion.php';
 
 
 $userCi = $_POST['ciUser'];
