@@ -1,6 +1,6 @@
 <?php
 
-$link = 'mysql:host=localhost;dbname=farma';
+$link = 'mysql:host=179.25.146.101;dbname=farma';
 $user = 'root';
 $pass = 'Kebu123321';
 
@@ -8,8 +8,8 @@ $pass = 'Kebu123321';
 try {
   $pdo = new PDO($link, $user, $pass);
   // print_r("Conectado a la base de datos! <br><br><br>");
-  
-  
+
+
   // foreach($pdo->query('SELECT * from colores') as $fila) {
   //     print_r($fila);
   // }}
