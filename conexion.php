@@ -1,6 +1,6 @@
 <?php
 
-$link = 'mysql:host=179.25.146.101;dbname=farma';
+$link = 'mysql:host=localhost;dbname=farma';
 $user = 'root';
 $pass = 'Kebu123321';
 
