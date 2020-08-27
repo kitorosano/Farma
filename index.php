@@ -10,12 +10,13 @@
 
     <!-- Referencing CSS files -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
     <link rel="stylesheet" href="css/estilos.css" type="text/css">
 
     <!-- Referencing Fontawesome Icons (THIS MUST GO IN THE 'HEAD' TAG) -->
     <script src="https://kit.fontawesome.com/24904b643a.js" crossorigin="anonymous"></script>
 
-    <title>Farma Paysandú (Github)</title>
+    <title>Farma Paysandú</title>
 
 </head>
 
@@ -133,22 +134,18 @@
     <!-- SESION INICIADA -->
     <?php
     if (isset($_SESSION['user'])) :
-
         include_once "includes/conexion.php";
 
-        //Leer de la BD y obtener los datos del usuario
-        $consulta = $pdo->prepare("SELECT *
-        FROM usuarios,farmacousuarios,farmacos
-        WHERE farmacousuarios.ciUsuario=usuarios.ciUsuario AND farmacousuarios.codFarmaco=farmacos.codFarmaco
-        AND usuarios.ciUsuario=?");
-        $consulta->execute(array($_SESSION['user']));
-        $client = $consulta->fetchAll();
-        $cliName = $client[0]['nombreUsuario'];
-
-
+        //Leer de la BD y obtener los datos del usuario x farmacos
+        $consulUserFarmacos = $pdo->prepare("SELECT *
+            FROM usuarios,farmacousuarios,farmacos
+            WHERE farmacousuarios.ciUsuario=usuarios.ciUsuario AND farmacousuarios.codFarmaco=farmacos.codFarmaco
+            AND usuarios.ciUsuario=?");
+        $consulUserFarmacos->execute(array($_SESSION['user']));
+        $client = $consulUserFarmacos->fetchAll();
     ?>
         <div class="container">
-            <h1>Sesion Iniciada para el usuario <?php echo $cliName ?></h1>
+            <h1>Sesion Iniciada para el usuario <?php echo $client[0]['nombreUsuario']; ?></h1>
             <br>
 
             <div id="userMenu" class="container">
@@ -166,44 +163,75 @@
 
             <!-- SELECCIONAR FARMACOS Y DIRECCION -->
             <div id="MenuPedido" class="container" style="display:none">
-                <div class="row row-cols-1 row-cols-md-2">
-                    <?php foreach ($client as $farmaco) : ?>
+                <form method="POST" action="calculate.php">
+                    <div class="row row-cols-1 row-cols-md-2">
+                        <?php $count = 1;
+                        foreach ($client as $farmaco) : ?>
 
-                        <div class="col mb-4">
-                            <div class="card border-dark bg-light h-100">
-                                <div class="card-body">
-                                    <h4 class="card-title text-monospace"><?php echo $farmaco['nombreFarmaco'] ?></h4>
-                                    <hr>
-                                    <p class="card-text"><?php echo $farmaco['descripcion'] ?></p>
-                                    <p class="card-text text-muted">Recetado: <?php echo $farmaco['fechaInicio'] ?></p>
-                                </div>
-                                <div class="card-footer d-flex flex-row justify-content-between align-items-center">
-                                    <input id="inAñadir-<?php echo $farmaco['codFarmaco'] ?>" type="number" value="0" min="0" max="<?php echo $farmaco['cantidad'] ?>" class="text-center inAñadir" style="width:30%">
-                                    <p class="card-text text-muted mb-0">Fecha Limite: <?php echo $farmaco['fechaFin'] ?></p>
-                                    <div class="justify-content-end">
-                                        <button id="btnAñadir-<?php echo $farmaco['codFarmaco'] ?>" class="btn btn-info btnAñadir">Añadir </button>
+                            <div class="col mb-4">
+                                <div class="card border-dark bg-light h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-monospace"><?php echo $farmaco['nombreFarmaco']; ?></h4>
+                                        <hr>
+                                        <p class="card-text"><?php echo $farmaco['descripcion']; ?></p>
+                                        <p class="card-text text-muted">Recetado: <?php echo $farmaco['fechaInicio']; ?></p>
+                                    </div>
+                                    <div class="card-footer d-flex flex-row justify-content-between align-items-center">
+                                        <input id="inAñadir-<?php echo $count; ?>" type="number" value="0" min="0" max="<?php echo $farmaco['cantidad']; ?>" class="text-center inAñadir" style="width:30%" name="inAñadir-<?php echo $count; ?>">
+                                        <p class="card-text text-muted mb-0">Fecha Limite: <?php echo $farmaco['fechaFin']; ?></p>
+                                        <div class="justify-content-end">
+                                            <button type="button" id="btnAñadir-<?php echo $count; ?>" class="btn btn-info btnAñadir">Añadir </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                    <?php endforeach ?>
-                </div>
-                <!-- DIRECCION -->
-                <form method="POST">
+                        <?php $count++;
+                        endforeach ?>
+                        <input type="hidden" name="count" value="<?php echo $count; ?>">
+                    </div>
+
+                    <!-- DIRECCION name=inAddress -->
                     <div class="form-group">
                         <label for="inAddress">Dirección a llevar</label>
-                        <input type="text" class="form-control" id="inAddress" placeholder="Calle y Número de Casa">
+                        <input type="text" class="form-control" name="inAddress" id="inAddress" placeholder="Roger Balet 2186">
                     </div>
+                    <!--  -->
+
+                    <!-- VOLVER 1 Y CONTINUAR -->
+                    <div class="row justify-content-between">
+                        <!-- Button trigger modal -->
+                        <button type="button" id="btnVolver1" class="btn btn-link">Volver</button>
+                        <div class="justify-content-end">
+                            <button id="btnContinuar" class="btn btn-success" type="button" data-toggle="modal" data-target="#modalDireccion">Continuar</button>
+                        </div>
+                    </div>
+                    <!--  -->
+
+                    <!-- MODAL (CONFIRMAR DIRECCION) -->
+                    <div class="modal fade" id="modalDireccion" tabindex="-1" data-backdrop="static" data-keyboard="false" aria-labelledby="modalDireccionLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-center modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title text-bold" id="modalDireccionLabel">¿Es correcta esta direccion?</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span id="closeModal" aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div id="mapContainer" class="modal-body">
+                                    <div id="map" class="" style="width: fit-content;height: 400px"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">No. Señalar en el mapa</button> -->
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    <button type="submit" id="btnConfirm" class="btn btn-primary">Confirmar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+
                 </form>
-                <!--  -->
-                <!-- VOLVER 1 Y CONTINUAR -->
-                <div class="row justify-content-between">
-                    <button id="btnVolver1" class="btn btn-link">Volver</button>
-                    <div class="justify-content-end">
-                        <button id="btnContinuar" class="btn btn-success">Continuar</button>
-                    </div>
-                </div>
                 <!--  -->
                 <br>
             </div>
@@ -226,7 +254,7 @@
                     </div>
                     <div class="form-group">
                         <label for="inputAddress">Dirección</label>
-                        <input type="text" class="form-control" id="inputAddress" placeholder="Calle y Número de Casa">
+                        <input disabled type="text" class="form-control" id="inDireccion">
                     </div>
                 </form>
 
@@ -247,13 +275,20 @@
     <?php endif ?>
     <!-- -->
 
-    <!-- Referencing JS files -->
+    <!-- Referencing JS from Bootstrap workflow -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
     </script>
     <script src="js/bootstrap.min.js"></script>
+    <!-- Referencing JS for Non-Images work -->
     <script src="js/holder.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script> -->
+    <!-- Referencing JS from HERE API, for Maps Services -->
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/calculate.js"></script>
+
 
     <script>
         $(document).ready(function() {
@@ -279,79 +314,54 @@
 
     <script>
         $(document).ready(function() {
-            <?php if (isset($_SESSION['user'])) : ?>
 
-                //TRANSICION DE BOTONES
-                $("#btnPedido").click(function() {
-                    $("#userMenu").hide(1000);
-                    $("#MenuPedido").fadeIn(2000);
-                })
-                $("#btnRegistro").click(function() {
-                    $("#userMenu").fadeOut();
-                })
-                $("#btnVolver1").click(function() {
-                    cart = [];
-                    $('.btnAñadir').prop("disabled", false).text("Añadir");
-                    $('.inAñadir').prop("disabled", false).prop("value", 0);
+            //TRANSICION DE BOTONES
+            $("#btnPedido").click(function() {
+                $("#userMenu").hide(1000);
+                $("#MenuPedido").fadeIn(2000);
+            })
+            $("#btnRegistro").click(function() {
+                $("#userMenu").fadeOut();
+            })
+            $("#btnVolver1").click(function() {
+                map = null, fromMarker = null;
 
-                    $("#MenuPedido").hide(300);
-                    $("#userMenu").show(1500);
-                });
-                $('#btnContinuar').click(function() {
-                    $("#MenuPedido").hide(1000);
-                    $("#MenuPedir").fadeIn(2000);
+                $('.btnAñadir').prop("disabled", false).text("Añadir");
+                $('.inAñadir').prop("disabled", false).prop("value", 0);
 
-                    let userAddress = $('inAddress').value;
+                $("#MenuPedido").hide(300);
+                $("#userMenu").show(1500);
+            });
+            $('#btnContinuar').click(function() {
+                start($('#inAddress').val());
+            });
 
+            $('#btnConfirm').click(function() {
+                $('#modalDireccion').modal('hide')
+                $("#MenuPedido").hide(1000);
+                $("#MenuPedir").fadeIn(2000);
 
+                $("#inDireccion").val($('#inAddress').val());
 
-                    //WHERE DO I PUT THE DAMN DIRECCTION INPUT, SO I CAN RETRIEVE THOSE LOCATIONS AND DO DAT GUGUL STUFF
-
-                    <?php
-                    //Leer de la BD
-                    $consul_local = $pdo->prepare("SELECT * 
-                    FROM farmacias,farmacofarmacias,farmacos 
-                    WHERE farmacofarmacias.codFarmacia=farmacias.codFarmacia AND farmacofarmacias.codFarmaco=farmacos.codFarmaco 
-                    AND farmacos.codFarmaco=0;");
-                    $consul_local->execute(array());
-                    $resultado_local = $consul_local->fetch();
-                    ?>
-                    let localData = <?php echo json_encode($resultado_local); ?>;
-
-
-                    console.log(cart, localData);
-                });
                 $("#btnVolver2").click(function() {
+                    map = null, fromMarker = null;
                     $("#MenuPedir").hide(300);
                     $("#MenuPedido").show(1500);
                 });
                 //
 
-                // BOTON AÑADIR DE LOS FARMACOS
-                let cart = [];
-                for (let farmaco of <?php echo json_encode($client); ?>) {
-                    let codFarmaco = farmaco.codFarmaco;
-                    $('#btnAñadir-' + codFarmaco).click(function() {
-                        let many = $("#inAñadir-" + codFarmaco)[0].value;
-
-                        cart.push({
-                            codFarmaco,
-                            many
-                        });
-
-                        $(this).prop("disabled", true).text("Añadido");
-                        $("#inAñadir-" + codFarmaco).prop("disabled", true);
-                    })
-                }
                 // 
-
-            <?php endif ?>
+            });
+            // ACCION BOTON AÑADIR DE LOS FARMACOS
+            for (let i = 1; i < <?php echo $count; ?>; i++) {
+                $('#btnAñadir-' + i).click(function() {
+                    $(this).prop("disabled", true).text("Añadido"); //MAKE SO YOU CAN CANCEL AND TIPE AGAIN
+                    $("#inAñadir-" + i).prop("readonly", true).addClass("text-muted").css("background-color", "rgba(0,0,0,.01)");
+                })
+            }
         });
     </script>
 
 </body>
 
 </html>
-
-
-<?php

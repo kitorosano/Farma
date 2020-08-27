@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer WayPoints S1E2</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+</head>
+
+<body style="margin: 0">
+  <div id="map" style="width:100vw; height:100vh"></div>
+
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+
+  <script>
+    const tiles =
+      'https://1.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png8?apiKey={key}';
+    const map = new L.Map("map", {
+      center: [-32, -58],
+      zoom: 10,
+      layers: [L.tileLayer(tiles, {
+        key: "MjT4Z-c7kBrLpicDHQm5hwj6HBNJIhYiYmjtdxAQK24"
+      })]
+    });
+
+    const marker1 = new L.Marker({
+      lat: -32,
+      lon: -58
+    });
+    const marker2 = new L.Marker({
+      lat: -32.1,
+      lon: -58.2
+    });
+    const marker3 = new L.Marker({
+      lat: -32.2,
+      lon: -58.1
+    });
+    marker1.addTo(map);
+    marker2.addTo(map);
+    marker3.addTo(map);
+
+    const circle = new L.circle(
+      marker1.getLatLng(), {
+        radius: 4000
+      });
+    circle.addTo(map);
+
+    const polyline = L.polyline([marker1.getLatLng(), marker2.getLatLng(), marker3.getLatLng()], {
+      color: "green",
+      width: 5
+    });
+    polyline.addTo(map);
+  </script>
+</body>
+
+</html>

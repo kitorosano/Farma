@@ -1,0 +1,41 @@
+
+WE KNOW THAT..
+-En la farmacia de Comepa solo podes comprar medicamentos recetados.
+-Sale mas barato comprar medicamentos recetados en comepa que en otras farmacias.
+-Los medicamentos que no tenga comepa los tenes que comprar por tu cuenta en otras farmacias.
+
+
+SO, WE DO...
+*Verificar si COMEPA tiene todos los medicamentos pedidos. De ser asi, sera esta la farmacia a pedir.
+*Si COMEPA no tiene todos los medicamentos, se mostrara otra farmacia mas cercana con el/los medicamento/s faltante/s. (ROUTING)
+
+El pedido mostrara los medicamentos que se pediran de comepa, y los que se pediran de la otra farmacia.
+
+
+DEL LADO DE LA FARMACIA SE MOSTRARA UN MAPA CON LA RUTA HACIA EL CLIENTE.
+
+
+
+
+var comepaHave=[], xFarmaciaHave=[];
+
+comepa = farmacias.comepa;
+
+foreach cart as cartItem{
+  foreach comepa as comepaItem{
+    if (cartItem == comepaItem){
+      comepaHave.push(cartItem);
+    } else {
+      xFarmacia(cartItem);
+    }
+  }
+}
+
+function xFarmacia(item){
+  foreach farmacias as xFarmacia {
+    foreach xFarmacia as xFarmaciaItem
+    if(item == xFarmaciaItem){
+      xFarmaciaHave.push(cartItem);
+    }
+  }
+}

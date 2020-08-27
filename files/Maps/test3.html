@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer WayPoints S1E3</title>
+</head>
+
+<body style="margin: 0;">
+  <div id="map" style="width:100vw; height:100vh"></div>
+
+  <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
+  <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
+  <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
+
+  <script>
+    const platform = new H.service.Platform({
+      "apikey": "MjT4Z-c7kBrLpicDHQm5hwj6HBNJIhYiYmjtdxAQK24"
+    });
+
+    const service = platform.getSearchService();
+
+    const geocoder = query => {
+      return new Promise((resolve, reject) => {
+        service.geocode({
+            q: query,
+          },
+          (success) => {
+            resolve(success.items[0].position);
+
+          },
+          (error) => {
+            reject(error);
+          });
+      });
+    }
+
+    const reverseGeocode = coords => {
+      return new Promise((resolve, reject) => {
+        service.reverseGeocode({
+          at: coords
+        }, (success) => {
+          resolve(success);
+
+        }, (error) => {
+          reject(error);
+        });
+      });
+    };
+
+    const start = async () => {
+      const local1 = await geocoder("Roger Ballet 2186, Paysandu, Uruguay");
+      const map = new H.Map(
+        document.getElementById("map"),
+        platform.createDefaultLayers().vector.normal.map, {
+          zoom: 14,
+          center: {
+            lat: local1.lat,
+            lng: local1.lng
+          }
+        }
+      );
+      const local2 = await geocoder("Colón 1224, Paysandu, Uruguay");
+      const local3 = await geocoder("Av. Zorrilla 1105, Paysandu, Uruguay");
+      const local1Marker = new H.map.Marker({
+        lat: local1.lat,
+        lng: local1.lng
+      });
+      const local2Marker = new H.map.Marker({
+        lat: local2.lat,
+        lng: local2.lng
+      });
+      const local3Marker = new H.map.Marker({
+        lat: local3.lat,
+        lng: local3.lng
+      });
+
+      const lineString = new H.geo.LineString();
+      lineString.pushPoint(local1Marker.getGeometry());
+      lineString.pushPoint(local2Marker.getGeometry());
+      lineString.pushPoint(local3Marker.getGeometry());
+      const polygon = new H.map.Polygon(lineString);
+
+      map.addObjects([local1Marker, local2Marker, local3Marker, polygon]);
+
+      const location = await reverseGeocode("-32.3,-58");
+      // console.log(location);
+
+      const mapEvents = new H.mapevents.MapEvents(map);
+      const behavior = new H.mapevents.Behavior(mapEvents);
+    }
+
+    start();
+  </script>
+
+</body>
+
+</html>

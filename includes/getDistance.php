@@ -14,7 +14,7 @@
 function getDistance($addressFrom, $addressTo, $unit = '')
 {
   // Google API key
-  $apiKey = 'AIzaSyBpB3qd7AdREstZhNIba6W6ynQhmEggubA';
+  $apiKey = 'AIzaSyDL-_idwsRwL22zseJc22VDBMVTwwe9sYM';
 
   // Change address format
   $formattedAddrFrom    = str_replace(' ', '+', $addressFrom);
