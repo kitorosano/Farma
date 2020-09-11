@@ -1,6 +1,10 @@
 <?php
-session_start();
 include_once 'includes/conexion.php';
+session_start();
+if (!isset($_SESSION['user'])) { //Si no esta logueado lo echa
+  header('Location: .');
+}
+
 
 
 $farmaCode = $_POST['codFarma'];
@@ -29,9 +33,8 @@ if (!$result) { //verificar result
 if (password_verify($farmaPass, $result['contrasenaFarmacia'])) {
   $_SESSION['farma'] = $farmaCode;
 
-
   header('Location: farmacias.php'); //REDIRECCIONA LA PAGINA A SI MISMA
   // header('Refresh: 0');
 } else {
-  echo 'Password is not valid!';
+  header('Location: farmacias.php');
 }

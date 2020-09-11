@@ -1,6 +1,9 @@
 <?php
 include_once 'includes/conexion.php';
 session_start();
+if (!isset($_SESSION['user'])) { //Si no esta logueado lo echa
+  header('Location: .');
+}
 
 
 $userCi = $_POST['ciUser'];

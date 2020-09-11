@@ -1,11 +1,8 @@
 <?php
-// $link = 'mysql: host=https://databases.000webhostapp.com;dbname=id14672585_test;port=3306';
-// $user = 'id14672585_testuser';
-// $pass = "Test123-321.";
 
 $linkConnect = 'mysql:host=localhost;dbname=farma';
 $userConnect = 'root';
-$passConnect = 'Kebu123321';
+$passConnect = '';
 
 
 try {

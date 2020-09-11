@@ -15,27 +15,19 @@ El pedido mostrara los medicamentos que se pediran de comepa, y los que se pedir
 DEL LADO DE LA FARMACIA SE MOSTRARA UN MAPA CON LA RUTA HACIA EL CLIENTE.
 
 
+Para pedir.php preciso:
+-direccion usuario
+-cuales farmacos que seleccionaron
+-cuantos farmacos se seleccionaron
+-descripcion de los farmacos seleccionados
+
+-cantidad de los farmacos A COMPRAR
+-farmacia de la cual se van A COMPRAR
+-
 
 
-var comepaHave=[], xFarmaciaHave=[];
+PARA SABER EL TEMA DE VARIAS FARMACIAS.
 
-comepa = farmacias.comepa;
-
-foreach cart as cartItem{
-  foreach comepa as comepaItem{
-    if (cartItem == comepaItem){
-      comepaHave.push(cartItem);
-    } else {
-      xFarmacia(cartItem);
-    }
-  }
-}
-
-function xFarmacia(item){
-  foreach farmacias as xFarmacia {
-    foreach xFarmacia as xFarmaciaItem
-    if(item == xFarmaciaItem){
-      xFarmaciaHave.push(cartItem);
-    }
-  }
-}
+SESSION[FARMACIAS] NOS TRAE EL CODIGO DE LA FARMACIA
+CON ARRAY COLUMN TENEMOS EL CODIGO DE CADA FARMACO
+CALCULAR CUANTOS SON DISTITNOS, Y SEGUN ESO HACER TANTOS INSERT, A LAS FARMACIAS CORRESPONDIENTES
