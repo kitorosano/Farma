@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Referencing CSS files -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/farmaSignIn.css" type="text/css">
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+
+  <title>Farmacias- Farma Uruguay</title>
+
+</head>
+
+<body>
+  <div class="container-fluid">
+    <!-- LOGO -->
+    <div class="row justify-content-center">
+      <a class="my-2" href="index.html">
+        <img class="mb-1" src="images/Logo1.png" width="300" alt="">
+      </a>
+    </div>
+    <!-- LOGO -->
+
+    <!-- FORMULARIOS -->
+    <form method="POST" class="form-signin">
+      <h4 class="mb-3 font-weight-normal pb-3">Inicio de Sesion Farmacias</h4>
+
+      <label for="codFarma">Codigo Farmacia:</label>
+      <input name="codFarma" type="text" id="codFarma" class="form-control mb-3" required autofocus>
+
+      <label for="passFarma mb-3">Contraseña:</label>
+      <input name="passFarma" type="password" id="passFarma" class="form-control" required>
+
+      <div class="d-flex justify-content-between">
+        <a href="." class="btn btn-link">Volver</a>
+        <button class="btn btn-primary" type="submit">Entrar</button>
+      </div>
+    </form>
+    <!-- FORMULARIOS -->
+
+
+  </div>
+
+
+  <!-- Referencing JS files -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+  </script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/holder.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script> -->
+  <script>
+    $(document).ready(function () {
+
+      //TRANSICION DE BOTONES
+      $("#btnBandeja").click(function () {
+        $("#farmaMenu").hide(1000);
+        $("#farmaPedidos").fadeIn(2000);
+      });
+      $("#btnVolver1").click(function () {
+        $("#farmaPedidos").hide(500);
+        $("#farmaMenu").show(2000);
+      });
+    });
+  </script>
+
+</body>
+
+</html>
