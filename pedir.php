@@ -97,12 +97,18 @@ if (!isset($_SESSION['user'])) { //Si no esta logueado lo echa
           <a href="#" class="list-group-item list-group-item-action list-group-item-dark d-flex justify-content-between">
             <span>Total (URU)</span>
             <strong>$
-              <?php $prices = array_column($_SESSION['farmacos'], 'precioUnitario');
-              $total = 0;
-              foreach ($prices as $price) {
-                $total += $price; //FALTA MULTIPLICAR POR LA CANTIDAD
-              }
-              echo $total;
+              <?php 
+              $prices = 0;
+              // $prices = array_column($_SESSION['farmacos'], 'precioUnitario');
+              foreach ($_SESSION['farmacos'] as $farmaco) {
+                  //print_r($farmaco);
+                $prices += $farmaco['precioUnitario'] * $farmaco['many'];
+              };
+              // $total = 0;
+              // foreach ($prices as $price) {
+              //   $total += $price; //FALTA MULTIPLICAR POR LA CANTIDAD
+              // }
+              echo $prices;
               ?>
             </strong>
           </a>
