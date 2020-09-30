@@ -40,7 +40,7 @@
     }
 
     //Calcular la ruta mas corta en auto, entre 2 puntos, promesa
-    const calculateRoute = (start, finish) => {
+    const calcularRoute = (start, finish) => {
       return new Promise((resolve, reject) => {
         const params = {
           routingMode: "fast",
@@ -50,6 +50,7 @@
           return: "polyline"
         };
         router.calculateRoute(params, success => {
+          console.log(success);
           resolve(success.routes[0].sections);
         }, error => {
           reject(error);
@@ -59,11 +60,12 @@
 
 
     // Inicializar todo, funcion trabaja en paralelo
-    const start = async (direccion, localidad) => {
+    const start = async (direccion="Roger Balet 2186", localidad="Colon 1224") => {
 
       //Convierte las direcciones en coordenadas para el mapa, 
       const casaDireccion = await geocoder(direccion);
       const farmaLocalidad = await geocoder(localidad);
+      // console.log(casaDireccion, farmaLocalidad);
       // const local1 = await geocoder("Roger Ballet 2186, Paysandu, Uruguay");
       // const local2 = await geocoder("Colón 1224, Paysandu, Uruguay");
 
@@ -90,7 +92,7 @@
       });
 
       //llamar a la funcion para calcular la ruta entre los locales
-      const routeOfLocals = await calculateRoute(casaDireccion, farmaLocalidad);
+      const routeOfLocals = await calcularRoute(casaDireccion, farmaLocalidad);
 
       // Mostrar en el mapa la ruta encontrada
       routeOfLocals.forEach(section => {

@@ -1,3 +1,4 @@
+-- Base de datos FARMA
 -- phpMyAdmin SQL Dump
 -- version 5.0.2
 -- https://www.phpmyadmin.net/
@@ -16,10 +17,6 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de datos: `farma`
---
 
 -- --------------------------------------------------------
 
@@ -58,6 +55,42 @@ INSERT INTO `farmacias` (`idFarmacia`, `codFarmacia`, `nombreFarmacia`, `contras
 (1, 1224, 'COMEPA', '$2y$09$bBRza5kGu.YFiLgwvWzt..fbckN1POk4i8kNyn59VOQgNjNgbpSRO', 'calle Colón 1224', 47232100),
 (2, 1395, 'Farmashop 82', '$2y$09$8ZWbqyWUBjxx9nx6HoFxE.0H3cQHnzClL6CSjNTLuX1HQ4gxb4hVO', 'calle 18 de Julio 1395', 47222645),
 (3, 1099, 'Farmashop 83', '$2y$09$amgsAasNaXli8fwjcqwwKeDBY96fRVY1v8WkbSbiKWl.RsP5pJOSq', 'calle 18 de Julio 1099', 47235550);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `farmacofarmacias`
+--
+
+CREATE TABLE `farmacofarmacias` (
+  `idFarmacia` int(11) NOT NULL,
+  `idFarmaco` int(11) NOT NULL,
+  `stock` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `farmacofarmacias`
+--
+
+INSERT INTO `farmacofarmacias` (`idFarmacia`, `idFarmaco`, `stock`) VALUES
+(1, 1, 10),
+(1, 2, 2),
+(1, 4, 7),
+(1, 5, 4),
+(1, 9, 2),
+(1, 10, 8),
+(1, 11, 6),
+(2, 2, 2),
+(2, 4, 4),
+(2, 5, 7),
+(2, 6, 1),
+(2, 7, 3),
+(2, 10, 2),
+(3, 2, 5),
+(3, 3, 8),
+(3, 7, 9),
+(3, 8, 7),
+(3, 9, 2);
 
 -- --------------------------------------------------------
 
@@ -180,6 +213,13 @@ ALTER TABLE `farmacias`
   ADD UNIQUE KEY `codFarmacia` (`codFarmacia`);
 
 --
+-- Indices de la tabla `farmacofarmacias`
+--
+ALTER TABLE `farmacofarmacias`
+  ADD PRIMARY KEY (`idFarmacia`,`idFarmaco`),
+  ADD KEY `idFarmaco` (`idFarmaco`);
+
+--
 -- Indices de la tabla `farmacos`
 --
 ALTER TABLE `farmacos`
@@ -252,6 +292,13 @@ ALTER TABLE `usuarios`
 ALTER TABLE `detallepedidos`
   ADD CONSTRAINT `detallepedidos_ibfk_1` FOREIGN KEY (`idPedido`) REFERENCES `pedidos` (`idPedido`) ON DELETE CASCADE,
   ADD CONSTRAINT `detallepedidos_ibfk_2` FOREIGN KEY (`idFarmaco`) REFERENCES `farmacos` (`idFarmaco`);
+
+--
+-- Filtros para la tabla `farmacofarmacias`
+--
+ALTER TABLE `farmacofarmacias`
+  ADD CONSTRAINT `farmacofarmacias_ibfk_1` FOREIGN KEY (`idFarmacia`) REFERENCES `farmacias` (`idFarmacia`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `farmacofarmacias_ibfk_2` FOREIGN KEY (`idFarmaco`) REFERENCES `farmacos` (`idFarmaco`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `farmacousuarios`

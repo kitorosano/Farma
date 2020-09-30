@@ -2,7 +2,7 @@
 
 $linkConnect = 'mysql:host=localhost;dbname=farma';
 $userConnect = 'root';
-$passConnect = '';
+$passConnect = 'Kebu123321';
 
 
 try {

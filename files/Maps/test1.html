@@ -41,15 +41,10 @@
       lat: -32.3,
       lng: -58.1
     });
-    const marker3 = new H.map.Marker({
-      lat: -32.31,
-      lng: -58.08
-    });
 
     const lineString = new H.geo.LineString();
     lineString.pushPoint(marker1.getGeometry());
     lineString.pushPoint(marker2.getGeometry());
-    lineString.pushPoint(marker3.getGeometry());
     const polyline = new H.map.Polyline(
       lineString, {
         style: {
@@ -70,7 +65,7 @@
     const circle = new H.map.Circle(marker1.getGeometry(), 4000);
 
     // map.addObject(marker1);
-    map.addObjects([marker1, marker2, marker3, polygon, circle, ]);
+    map.addObjects([marker1, marker2,  polyline, circle, ]);
 
     const distance = marker1.getGeometry().distance(marker2.getGeometry());
     console.log((distance / 1000).toFixed(2) + " km\n" + distance + " m");

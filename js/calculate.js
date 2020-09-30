@@ -14,23 +14,6 @@ const defaultLayers = platform.createDefaultLayers();
 
 let map, fromMarker;
 
-
-const geocoder = query => {
-  return new Promise((resolve, reject) => {
-    service.geocode({
-        q: query + " Paysandu, Uruguay"
-      },
-      (success) => {
-        resolve(success.items[0].position);
-
-      },
-      (error) => {
-        reject(error);
-      });
-  });
-}
-
-
 async function start(direccion) {
   if (!map) {
     const from = await geocoder(direccion);
@@ -58,5 +41,23 @@ async function start(direccion) {
   ui.getControl('scalebar').setAlignment('bottom-right');
   const mapEvents = new H.mapevents.MapEvents(map);
   const behavior = new H.mapevents.Behavior(mapEvents);
+
+
+  // Funcion de Buscar la direccion 
+const geocoder = query => {
+  return new Promise((resolve, reject) => {
+    service.geocode({
+        q: query + " Paysandu, Uruguay"
+      },
+      (success) => {
+        resolve(success.items[0].position);
+
+      },
+      (error) => {
+        reject(error);
+      });
+  });
+}
+
 
 }
