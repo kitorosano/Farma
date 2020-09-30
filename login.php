@@ -1,10 +1,6 @@
 <?php
 include_once 'includes/conexion.php';
 session_start();
-if (!isset($_SESSION['user'])) { //Si no esta logueado lo echa
-  header('Location: .');
-}
-
 
 $userCi = $_POST['ciUser'];
 $userPass = $_POST['passUser'];
@@ -21,8 +17,8 @@ if (!$result) { //verificar result
 }
 if (password_verify($userPass, $result['contrasenaUsuario'])) {
   $_SESSION['user'] = $userCi;
-
-  header('Location: .'); //REDIRECCIONA LA PAGINA A SI MISMA
 } else {
   echo 'Password is not valid!';
 }
+
+header('Location: .'); //REDIRECCIONA LA PAGINA A SI MISMA

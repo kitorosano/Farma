@@ -34,12 +34,12 @@ if (!isset($_SESSION['user'])) { //Si no esta logueado lo echa
 
 </head>
 
-<body class="bg-light">
+<body style="background-color: #d9eafa;">
 
   <!-- VOLVER 2 Y PEDIR-->
   <br>
   <div class="pl-5">
-    <button id="btnVolver2" class="btn btn-link">Cancelar</button>
+    <a href="." id="cancelarPedido" class="btn btn-link">Cancelar</a>
   </div>
   <!-- END VOLVER -->
 
@@ -51,22 +51,24 @@ if (!isset($_SESSION['user'])) { //Si no esta logueado lo echa
 
       <!-- FORMULARIO -->
       <div class="col-7 px-5">
-        <h4 class="mb-3">Datos a enviar</h4>
+        <div class="container shadow p-4 mb-5 bg-white rounded">
+          <h4 class="mb-3">Datos a enviar</h4>
 
-        <form method="POST" action="enviarPedido.php">
-          <div class="form-group">
-            <label for="confContrasena">Confirmar Contraseña</label>
-            <input name="inConfContrasena" type="password" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="inputAddress">Dirección</label>
-            <input readonly name="inDireccion" type="text" class="form-control" id="inDireccion" value="<?php echo $_SESSION['userDir'] ?>">
-          </div>
-          <hr class="mb-4">
-          <div class="justify-content-end">
-            <button id="btnPedir" class="btn btn-danger btn-lg btn-block" type="submit">Ordenar a mi Casa!</button>
-          </div>
-        </form>
+          <form method="POST" action="enviarPedido.php">
+            <div class="form-group">
+              <label for="confContrasena">Confirmar Contraseña</label>
+              <input name="inConfContrasena" type="password" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="inputAddress">Dirección</label>
+              <input readonly name="inDireccion" type="text" class="form-control" id="inDireccion" value="<?php echo $_SESSION['userDir'] ?>">
+            </div>
+            <hr class="mb-4">
+            <div class="justify-content-end">
+              <button id="btnPedir" class="btn btn-light btn-lg btn-block rounded" type="submit">Ordenar a mi Casa!</button>
+            </div>
+          </form>
+        </div>
       </div>
       <!-- FIN FORMULARIO -->
 
@@ -97,11 +99,11 @@ if (!isset($_SESSION['user'])) { //Si no esta logueado lo echa
           <a href="#" class="list-group-item list-group-item-action list-group-item-dark d-flex justify-content-between">
             <span>Total (URU)</span>
             <strong>$
-              <?php 
+              <?php
               $prices = 0;
               // $prices = array_column($_SESSION['farmacos'], 'precioUnitario');
               foreach ($_SESSION['farmacos'] as $farmaco) {
-                  //print_r($farmaco);
+                //print_r($farmaco);
                 $prices += $farmaco['precioUnitario'] * $farmaco['many'];
               };
               // $total = 0;
@@ -118,6 +120,14 @@ if (!isset($_SESSION['user'])) { //Si no esta logueado lo echa
     </div>
   </div>
   <!-- FIN ENVIAR PEDIDO -->
+
+  <!-- COPYRIGHT -->
+  <footer>
+    <p style="font-size: 1rem">&copy; Farma <script>
+        document.write(new Date().getFullYear())
+      </script>
+    </p>
+  </footer>
 
 
   <!-- Referencing JS from Bootstrap workflow -->

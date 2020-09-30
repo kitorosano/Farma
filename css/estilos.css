@@ -1,7 +1,21 @@
-#miNavbar {
-  align-items: center;
-  padding: .2rem .5rem .2rem .5rem;
-  background-color: rgba(0, 0, 0, .1);
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  background-color:#d9eafa;
+  padding-bottom: 50px;
+  min-height: 100vh;
+}
+
+footer {
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%; 
 }
 
 .bg-dark,
@@ -15,11 +29,6 @@
   padding: 0;
 }
 
-.navbar-nav {
-  display: flex;
-  flex: 1 1 auto;
-}
-
 .social a {
   color: black;
   font-size: 2rem;
@@ -28,4 +37,27 @@
 
 .social a:hover {
   color: #fff;
+}
+
+.login {
+  margin-bottom: 3rem;
+  margin-top: 1.5rem;
+}
+
+#userMenu {
+  margin-top: 20vh;
+}
+
+.btn-menu {
+  width: 500px;
+  height: 200px;
+  font-size: 2rem;
+}
+
+#MenuPedido {
+  margin-top: 10px;
+}
+
+#MenuPedido, #btnPedir {
+  border: 2px solid #000000;
 }

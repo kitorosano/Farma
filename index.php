@@ -18,26 +18,27 @@
 
     <title>Farma Uruguay</title>
 
+
 </head>
 
-<body style="background-color: #ECEDEF;">
+<body>
     <!-- SESION NO INICIADA -->
     <?php if (!isset($_SESSION['user'])) : ?>
+        <section style="background-color: #d9eafa;">
 
-        <!-- LOGO -->
-        <div class="container d-flex justify-content-center">
-            <a class="row mt-3" href="index.html">
-                <img class="mb-1" src="images/Logo1.png" width="300" alt="">
-            </a>
-        </div>
-        <!-- END LOGO -->
+            <!-- LOGO -->
+            <div class="container d-flex justify-content-center">
+                <a class="row mt-3" href="index.html">
+                    <img class="mb-1" src="images/Logo1.png" width="300" alt="">
+                </a>
+            </div>
+            <!-- END LOGO -->
 
-        <!-- FORMULARIOS -->
-        <div class="login mx-auto" style="width: 500px;">
-            <div class="container">
-                <br>
+            <!-- FORMULARIOS -->
+            <div class="login mx-auto" style="width: 500px;">
+                <div class="container shadow p-4 mb-2 bg-white rounded">
 
-                <h4 class="mb-4">Inicio de Sesion</h2>
+                    <h4 class="mb-4">Inicio de Sesion</h4>
                     <form action="login.php" method="POST">
 
                         <label for="ciUser"> Documento CI:</label>
@@ -46,18 +47,16 @@
                         <label for="passUser"> Contraseña:</label>
                         <input type="password" class="form-control mb-3 required input" name="passUser" autocomplete="false" value="">
 
-                        <div class="mt-3 d-flex justify-content-between">
+                        <div class="mt-4 d-flex justify-content-between">
                             <a href="farmacias.php">Iniciar como farmacia?</a>
                             <button class="btn btn-primary" type="submit">Entrar</button>
                         </div>
                     </form>
-
-                    <br><br><br>
-
+                </div>
             </div>
-        </div>
-        <!-- FORMULARIOS -->
+            <!-- FORMULARIOS -->
 
+        </section>
     <?php endif ?>
     <!--  -->
 
@@ -69,26 +68,40 @@
         //Leer de la BD y obtener los datos del usuario x farmacos
         $consulUserFarmacos = $pdo->prepare("SELECT *
             FROM usuarios,farmacousuarios,farmacos
-            WHERE farmacousuarios.ciUsuario=usuarios.ciUsuario AND farmacousuarios.idFarmaco=farmacos.idFarmaco
+            WHERE farmacousuarios.idUsuario=usuarios.idUsuario AND farmacousuarios.idFarmaco=farmacos.idFarmaco
             AND usuarios.ciUsuario=?");
         $consulUserFarmacos->execute(array($_SESSION['user']));
         $client = $consulUserFarmacos->fetchAll();
-    ?>
-        <div class="container">
-            <h1>Sesion Iniciada para el usuario <?php echo $client[0]['nombreUsuario']; ?></h1>
-            <br>
 
-            <div id="userMenu" class="container">
-                <div class="d-flex flex-column py-2">
-                    <button id="btnPedido" class="btn btn-danger p-5 align-items-start">Realizar Pedido</button>
+    ?>
+        <nav class="navbar navbar-light" style="height: min-content; background-color: #e0f2ff;">
+            <a class="navbar-brand" href="#">
+                <img src="images/Logo1.png" width="110" height="50" alt="" loading="lazy">
+            </a>
+
+            <ul style="list-style: none;" class="pl-0 mb-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <?php echo $client[0]['nombreUsuario']; ?>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href=".">Mi cuenta</a>
+                        <a class="dropdown-item" href="#">Ayuda</a>
+                        <a class="dropdown-item" href="logout.php">Cerrar sesión</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="container">
+            <div id="userMenu" class="row justify-content-center">
+                <div class="col-6 text-center">
+                    <button id="btnPedido" class="btn btn-menu shadow btn-light p-5 align-items-start">Realizar Pedido</button>
                 </div>
                 <!-- <br> -->
-                <div class="d-flex flex-column py-2">
-                    <button id="btnRegistro" class="btn btn-warning p-5 align-items-end">Ver Registro</button>
+                <div class="col-6 text-center">
+                    <button id="btnRegistro" class="btn btn-menu shadow btn-light p-5 align-items-end">Ver Registro</button>
                 </div>
-
-                <br><br>
-                <a href="logout.php">Cerrar sesion</a>
             </div>
 
             <!-- SELECCIONAR FARMACOS Y DIRECCION -->
@@ -122,14 +135,14 @@
                     </div>
 
                     <!-- DIRECCION name=inAddress -->
-                    <div class="form-group">
-                        <label for="inAddress">Dirección a llevar</label>
+                    <div class="form-group mt-3">
+                        <label for="inAddress">Dirección a llevar:</label>
                         <input type="text" class="form-control" name="inAddress" id="inAddress" placeholder="Roger Balet 2186">
                     </div>
                     <!--  -->
 
                     <!-- VOLVER 1 Y CONTINUAR -->
-                    <div class="row justify-content-between">
+                    <div class="row justify-content-between mt-5">
                         <!-- Button trigger modal -->
                         <button type="button" id="btnVolver1" class="btn btn-link">Volver</button>
                         <div class="justify-content-end">
@@ -171,6 +184,14 @@
 
         </div>
     <?php endif ?>
+
+    <!-- COPYRIGHT -->
+    <footer>
+        <p style="font-size: 1rem">&copy; Farma <script>
+                document.write(new Date().getFullYear())
+            </script>
+        </p>
+    </footer>
     <!-- -->
 
     <!-- Referencing JS from Bootstrap workflow -->

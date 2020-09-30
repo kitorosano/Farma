@@ -8,7 +8,7 @@ if (!isset($_SESSION['user'])) { //Si no esta logueado lo echa
 //OBTENER DATOS DEL CLIENTE CON SUS FARMACOS RECETADOS 
 $consulUserFarmacos = $pdo->prepare("SELECT *
 FROM usuarios,farmacousuarios,farmacos
-WHERE farmacousuarios.ciUsuario=usuarios.ciUsuario AND farmacousuarios.idFarmaco=farmacos.idFarmaco
+WHERE farmacousuarios.idUsuario=usuarios.idUsuario AND farmacousuarios.idFarmaco=farmacos.idFarmaco
 AND usuarios.ciUsuario=?");
 $consulUserFarmacos->execute(array($_SESSION['user']));
 $client = $consulUserFarmacos->fetchAll();
@@ -63,6 +63,7 @@ if (array_diff($cart, $results) == []) { //SI TODO ESTA EN COMEPA LO HACEMOS MAS
   $_SESSION['local'] = 1;
   header('Location: pedir.php');
 } else { //SI NO TODO ESTA EN COMEPA, REBUSCAR EN OTRAS FARMACIAS
+
   echo "falta algo";
 }
 
