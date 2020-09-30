@@ -61,12 +61,12 @@ if (array_diff($cart, $results) == []) { //SI TODO ESTA EN COMEPA LO HACEMOS MAS
   // $_SESSION['userCart'] = $cartMany;
   $_SESSION['farmacos'] = $resultKnowFarma;
   $_SESSION['local'] = 1;
-  header('Location: pedir.php');
 } else { //SI NO TODO ESTA EN COMEPA, REBUSCAR EN OTRAS FARMACIAS
-
+  
   echo "falta algo";
 }
 
+header('Location: pedir.php');
 
 // echo "<pre>";
 // $diff = array_diff($cart, $results);
