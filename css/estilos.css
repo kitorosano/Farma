@@ -11,13 +11,6 @@ body {
   min-height: 100vh;
 }
 
-footer {
-  text-align: center;
-  position: absolute;
-  bottom: 0;
-  width: 100%; 
-}
-
 .bg-dark,
 .navbar-light {
   transition: all 1s ease
@@ -44,20 +37,27 @@ footer {
   margin-top: 1.5rem;
 }
 
-#userMenu {
-  margin-top: 20vh;
-}
-
 .btn-menu {
   width: 500px;
   height: 200px;
   font-size: 2rem;
 }
 
-#MenuPedido {
+.pedido {
   margin-top: 10px;
 }
 
-#MenuPedido, #btnPedir {
+.pedido {
+  margin-top: 10px;
+}
+#btnPedir {
   border: 2px solid #000000;
+}
+
+
+footer {
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%; 
 }

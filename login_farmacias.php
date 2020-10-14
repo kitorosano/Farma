@@ -1,20 +1,11 @@
 <?php
 include_once 'includes/conexion.php';
 session_start();
-if (!isset($_SESSION['user'])) { //Si no esta logueado lo echa
-  header('Location: .');
-}
-
 
 
 $farmaCode = $_POST['codFarma'];
 // $userName = $_POST['nameFarma'];
 $farmaPass = $_POST['passFarma'];
-
-// echo '<pre>';
-// var_dump($farmaCode, $farmaPass);
-// echo '</pre>';
-
 
 // //VERIFICAR SI YA EXISTE EL USUARIO NUEVO EN LA BD//
 $sql = 'SELECT * FROM farmacias WHERE codFarmacia=?';

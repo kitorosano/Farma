@@ -6,7 +6,6 @@ if (!isset($_SESSION['user'])) { //Si no esta logueado lo echa
   header('Location: .');
 };
 
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -82,16 +81,21 @@ if (!isset($_SESSION['user'])) { //Si no esta logueado lo echa
         <div id="cartList" class="list-group mb-3">
           <!-- ITEM CARRITO -->
           <?php foreach ($_SESSION['farmacos'] as $item) : ?>
-            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0"><?php echo $item['nombreFarmaco'] ?></h6>
-                <small class="text-muted"><?php echo $item['nombreFarmacia'] ?></small>
-              </div>
-              <div>
-                <span class="badge badge-primary badge-pill"><?php echo $item['many'] ?></span>
-                <span class="px-2">x</span>
-                <span class="text-muted">$<?php echo $item['precioUnitario'] ?></span>
-              </div>
+            <a href="#" class="list-group-item list-group-item-action lh-condensed">
+              <div class="row">
+
+                <div class="col-8">
+                  <h6 class="my-0"><?php echo $item['nombreSugerido'] ?></h6>
+                  <small class="text-muted"><?php echo $item['nombreFarmacia'] ?></small>
+                </div>
+                <div class="col-4 text-right">
+                  <span>
+                    <span class="badge badge-primary badge-pill"><?php echo $item['many'] ?></span>
+                    <!-- <span class="px-2">x</span> -->
+                    <span class="text-muted" style="font-size: 0.9rem;"> x $<?php echo $item['precioUnitario'] ?></span>
+                  </span>
+                </div>
+             </div>
             </a>
 
           <?php endforeach ?>
@@ -111,6 +115,7 @@ if (!isset($_SESSION['user'])) { //Si no esta logueado lo echa
               //   $total += $price; //FALTA MULTIPLICAR POR LA CANTIDAD
               // }
               echo $prices;
+              
               ?>
             </strong>
           </a>
@@ -140,7 +145,6 @@ if (!isset($_SESSION['user'])) { //Si no esta logueado lo echa
   <!-- Referencing JS from HERE API, for Maps Services -->
   <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
   <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/calculate.js"></script>
 
 
   <script>

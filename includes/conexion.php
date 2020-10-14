@@ -14,3 +14,4 @@ try {
   print "¡Error al conectarse a la base de datos!: <br>" . $e->getMessage() . "<br/>";
   die();
 }
+  

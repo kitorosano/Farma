@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Distance</title>
+  <title>RUTA EN EL MAPA PARA LAS FARMACIAS</title>
 </head>
 
 <body>
@@ -28,7 +28,7 @@
     const geocoder = query => {
       return new Promise((resolve, reject) => {
         service.geocode({
-            q: query,
+            q: query + "Paysandu, Uruguay"
           },
           (success) => {
             resolve(success.items[0].position);
@@ -62,12 +62,10 @@
     // Inicializar todo, funcion trabaja en paralelo
     const start = async (direccion="Roger Balet 2186", localidad="Colon 1224") => {
 
-      //Convierte las direcciones en coordenadas para el mapa, 
+      // Convierte las direcciones en coordenadas para el mapa, 
       const casaDireccion = await geocoder(direccion);
       const farmaLocalidad = await geocoder(localidad);
-      // console.log(casaDireccion, farmaLocalidad);
-      // const local1 = await geocoder("Roger Ballet 2186, Paysandu, Uruguay");
-      // const local2 = await geocoder("Colón 1224, Paysandu, Uruguay");
+      console.log(casaDireccion, farmaLocalidad);
 
       //Inicializar mapa, punto centro es el local1.
       const map = new H.Map(
