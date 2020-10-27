@@ -133,7 +133,7 @@ if ($_POST) {
 							WHERE p.codfarmacia=f.codfarmacia AND p.ciusuario=u.ciusuario
 							AND f.codfarmacia=?  AND p.status="pendiente"');
 					$consulPedidos->execute(array($_SESSION['farma']));
-					$fPedido = $consulPedidos->fetchAll();
+					$fPedido = $consulPedidos->fetch();
 					$consulPedidos->closeCursor();
 
 					print_r($fPedido);
