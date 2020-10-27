@@ -11,7 +11,6 @@ $consul_verifyuser = $pdo->prepare($sql);
 $consul_verifyuser->execute(array($userCi));
 $result = $consul_verifyuser->fetch();
 
-var_dump($result);
 
 if (!$result) { //verificar result
   echo '<br>No existe el usuario para iniciar la sesion';
@@ -19,6 +18,7 @@ if (!$result) { //verificar result
 }
 if (password_verify($userPass, $result['contrasenaUsuario'])) {
   $_SESSION['user'] = $userCi;
+  var_dump($_SESSION);
 } else {
   echo 'Password is not valid!';
 }
