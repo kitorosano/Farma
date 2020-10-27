@@ -5,13 +5,15 @@ session_start();
 $userCi = $_POST['ciUser'];
 $userPass = $_POST['passUser'];
 
-var_dump($_POST);
-
 // //VERIFICAR SI YA EXISTE EL USUARIO NUEVO EN LA BD//
 $sql = 'SELECT * FROM usuarios WHERE ciUsuario=?';
 $consul_verifyuser = $pdo->prepare($sql);
 $consul_verifyuser->execute(array($userCi));
 $result = $consul_verifyuser->fetch();
+
+echo "<pr>";
+print_r($result);
+echo "</pr>";
 
 
 if (!$result) { //verificar result
@@ -21,7 +23,6 @@ if (!$result) { //verificar result
 var_dump(password_verify($userPass, $result['contrasenaUsuario']));
 if (password_verify($userPass, $result['contrasenaUsuario'])) {
   $_SESSION['user'] = $userCi;
-  var_dump($_SESSION);
 } else {
   echo 'Password is not valid!';
   die();
