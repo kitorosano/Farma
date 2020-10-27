@@ -4,9 +4,7 @@
 // $userConnect = 'root';
 // $passConnect = 'Kebu123321';
 $db = parse_url(getenv("DATABASE_URL"));
-
-
-
+// $db = parse_url('postgres://postgres:postgres@localhost:5432/farma');
 
 try {
   // $pdo = new PDO($linkConnect, $userConnect, $passConnect);
