@@ -18,7 +18,7 @@ if (!$result) { //verificar result
   echo '<br>No existe el usuario para iniciar la sesion';
   die();
 }
-print_r(password_verify($userPass, $result['contrasenaUsuario']));
+var_dump(password_verify($userPass, $result['contrasenaUsuario']));
 if (password_verify($userPass, $result['contrasenaUsuario'])) {
   $_SESSION['user'] = $userCi;
   var_dump($_SESSION);
