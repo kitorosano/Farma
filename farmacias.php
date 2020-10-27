@@ -86,7 +86,7 @@ if ($_POST) {
 		include_once "includes/conexion.php";
 
 		//Leer de la BD y obtener los datos del usuario x farmacos
-		$consulUserFarmacos = $pdo->prepare("SELECT nombreFarmacia, fgeoLat, fgeoLng FROM farmacias WHERE farmacias.codfarmacia=?");
+		$consulUserFarmacos = $pdo->prepare("SELECT nombrefarmacia, fgeolat, fgeolng FROM farmacias WHERE farmacias.codfarmacia=?");
 		$consulUserFarmacos->execute(array($_SESSION['farma']));
 		$data = $consulUserFarmacos->fetch();
 
@@ -100,7 +100,7 @@ if ($_POST) {
 			<ul style="list-style: none;" class="pl-0 mb-0">
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="dropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<?php echo $data['nombreFarmacia']; ?>
+						<?php echo $data['nombrefarmacia']; ?>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
 						<a class="dropdown-item" href=".">Mi cuenta</a>
@@ -127,9 +127,9 @@ if ($_POST) {
 				<div class="accordion w-100 my-2" id="listaPedidos">
 					<?php
 					//Leer de la BD y obtener los datos del farmacias x farmacos
-					$consulPedidos = $pdo->prepare("SELECT f.*, p.*, u.nombreUsuario
+					$consulPedidos = $pdo->prepare("SELECT f.*, p.*, u.nombreusuario
 							FROM farmacias f,pedidos p,usuarios u
-							WHERE p.codfarmacia=f.codfarmacia AND p.ciUsuario=u.ciUsuario
+							WHERE p.codfarmacia=f.codfarmacia AND p.ciusuario=u.ciusuario
 							AND f.codfarmacia=?  AND p.status='pendiente'");
 					$consulPedidos->execute(array($_SESSION['farma']));
 					$fPedido = $consulPedidos->fetchAll();
@@ -147,7 +147,7 @@ if ($_POST) {
 
 					$count = 1;
 					foreach ($fPedido as $eltPedido) :
-						$geo = $eltPedido['geoLat'] . "," . $eltPedido['geoLng'];
+						$geo = $eltPedido['geolat'] . "," . $eltPedido['geolng'];
 					?>
 
 						<!-- CARD -->
@@ -174,7 +174,7 @@ if ($_POST) {
 										<div class="col-6 text-center">
 											<!-- CEDULA -->
 											<div class="align-center">
-												<h4 class="card-title text-monospace">Pedido del CI: <?php echo $eltPedido['ciUsuario'] ?></h4>
+												<h4 class="card-title text-monospace">Pedido del CI: <?php echo $eltPedido['ciusuario'] ?></h4>
 											</div>
 											<!-- MAPA -->
 											<div class="align-center mt-3">
@@ -190,7 +190,7 @@ if ($_POST) {
 										</div>
 										<!-- DERECHA -->
 										<div class="col-4 pl-0 text-center">
-											<p class="card-text px-3"><?php echo $eltPedido['nombreUsuario']; ?></p>
+											<p class="card-text px-3"><?php echo $eltPedido['nombreusuario']; ?></p>
 											<hr class="w-100 pl-0 ">
 											<p class="card-text px-3"><?php echo $eltPedido['direccion']; ?></p>
 										</div>
@@ -213,9 +213,9 @@ if ($_POST) {
 											<?php
 											$consulDetPedidos = $pdo->prepare("SELECT *
                                                     FROM pedidos p, detallepedidos dp, farmacos f
-                                                    WHERE dp.idPedido=p.idPedido AND dp.codfarmaco=f.codfarmaco
-                                                    AND p.idPedido=?");
-											$consulDetPedidos->execute(array($eltPedido['idPedido']));
+                                                    WHERE dp.idpedido=p.idpedido AND dp.codfarmaco=f.codfarmaco
+                                                    AND p.idpedido=?");
+											$consulDetPedidos->execute(array($eltPedido['idpedido']));
 											$fDetPedido = $consulDetPedidos->fetchAll();
 											// print_r($fDetPedido);
 
@@ -223,11 +223,11 @@ if ($_POST) {
 												<tbody>
 													<tr>
 														<td class="text-center align-middle"><?php echo $eltDetPedido['codfarmaco']; ?></td>
-														<td class="text-center align-middle"><?php echo $eltDetPedido['nombreFarmaco']; ?></td>
-														<td class="text-center align-middle"><?php echo $eltDetPedido['nombreSugerido']; ?></td>
-														<td class="text-right align-middle">$ <?php echo $eltDetPedido['precioUnitario']; ?></td>
+														<td class="text-center align-middle"><?php echo $eltDetPedido['nombrefarmaco']; ?></td>
+														<td class="text-center align-middle"><?php echo $eltDetPedido['nombresugerido']; ?></td>
+														<td class="text-right align-middle">$ <?php echo $eltDetPedido['preciounitario']; ?></td>
 														<td class="text-center align-middle"><?php echo $eltDetPedido['cantidad']; ?></td>
-														<td class="text-right align-middle">$ <?php echo ($eltDetPedido['precioUnitario'] * $eltDetPedido['cantidad']); ?></td>
+														<td class="text-right align-middle">$ <?php echo ($eltDetPedido['preciounitario'] * $eltDetPedido['cantidad']); ?></td>
 													</tr>
 												</tbody>
 											<?php endforeach; ?>
@@ -310,8 +310,8 @@ if ($_POST) {
 								<input type="hidden" name="cod" value="<?php echo $farmaco['codfarmaco'] ?>">
 								<!-- NOMBRE -->
 								<div class="col-4 text-left">
-									<h6 class="my-0"><?php echo $farmaco['nombreFarmaco'] ?></h6>
-									<small class="text-muted"><?php echo $farmaco['nombreSugerido'] ?></small>
+									<h6 class="my-0"><?php echo $farmaco['nombrefarmaco'] ?></h6>
+									<small class="text-muted"><?php echo $farmaco['nombresugerido'] ?></small>
 								</div>
 
 								<!-- STOCK -->
@@ -334,7 +334,7 @@ if ($_POST) {
 
 
 								<div class="col-2 text-center">
-									<span class="">$ <?php echo $farmaco['precioUnitario'] ?></span>
+									<span class="">$ <?php echo $farmaco['preciounitario'] ?></span>
 								</div>
 
 								<!-- PRECIO Y EDITAR -->
@@ -456,7 +456,7 @@ if ($_POST) {
 		$('#mapaModal').on('shown.bs.modal', async event => {
 			let button = $(event.relatedTarget), // Button that triggered the modal
 				data = button.data('where').split(','),
-				latlng = [<?php echo json_encode($data['fgeoLat']) ?>, <?php echo json_encode($data['fgeoLng']) ?>];
+				latlng = [<?php echo json_encode($data['fgeolat']) ?>, <?php echo json_encode($data['fgeolng']) ?>];
 			// console.log(data);
 
 			if (!mapReturn) {
