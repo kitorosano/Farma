@@ -146,7 +146,7 @@ $farmaData = $consul_GeoLocation->fetchAll();
       }
 
       document.getElementById("farmaciaDistancia").value = JSON.stringify(farmaciaDistancia);
-      // document.getElementById("form1").submit();
+      document.getElementById("form1").submit();
     };
 
     start();
