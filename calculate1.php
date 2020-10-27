@@ -16,8 +16,8 @@ if (!isset($_SESSION['user'])) { //Si no esta logueado lo echa
 //OBTENER DATOS DEL CLIENTE CON SUS FARMACOS RECETADOS 
 $consulUserFarmacos = $pdo->prepare("SELECT *
 FROM usuarios u,farmacousuarios fu,farmacos f
-WHERE fu.ciUsuario=u.ciUsuario AND fu.codFarmaco=f.codFarmaco
-AND u.ciUsuario=?");
+WHERE fu.ciusuario=u.ciusuario AND fu.codfarmaco=f.codfarmaco
+AND u.ciusuario=?");
 $consulUserFarmacos->execute(array($_SESSION['user']));
 $client = $consulUserFarmacos->fetchAll();
 
@@ -36,10 +36,10 @@ $cartMany = []; //CUAL cod del farmaco y CUANTA cantidad se selecciono
 for ($i = 1; $i < $_SESSION['count']; $i++) { //Count empieza desde 1
   if (!$_POST['inAñadir-' . $i] == 0) { //Para los paneles añadidos (pedidos)
 
-    array_push($cart, $client[$i - 1]['codFarmaco']);
+    array_push($cart, $client[$i - 1]['codfarmaco']);
 
     array_push($cartMany, [
-      "which" => $client[$i - 1]['codFarmaco'],
+      "which" => $client[$i - 1]['codfarmaco'],
       "many" => $_POST['inAñadir-' . $i]
     ]);
   }
@@ -59,7 +59,7 @@ $_SESSION['params'] = $params;
 
 
 //OBTENER GeoLocalidad de las farmacias
-$consul_GeoLocation = $pdo->prepare("SELECT nombreFarmacia,fgeoLat,fgeoLng
+$consul_GeoLocation = $pdo->prepare("SELECT nombrefarmacia,fgeolat,fgeolng
 FROM farmacias");
 $consul_GeoLocation->execute();
 $farmaData = $consul_GeoLocation->fetchAll();
@@ -133,13 +133,13 @@ $farmaData = $consul_GeoLocation->fetchAll();
       for (let local of locals) {
         // console.log(local)
 
-        const lat = local.fgeoLat;
-        const lng = local.fgeoLng;
+        const lat = local.fgeolat;
+        const lng = local.fgeolng;
         const marker2 = new H.map.Marker({ lat,lng });
         const distance = marker1.getGeometry().distance(marker2.getGeometry());
 
         farmaciaDistancia.push({
-          name: local.nombreFarmacia,
+          name: local.nombrefarmacia,
           distance: distance
         })
 

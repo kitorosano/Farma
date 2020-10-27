@@ -18,9 +18,9 @@ $cart = $_SESSION['cart'];
 
 
 // CONSULTA SABER QUE LOCALES TIENEN LOS PEDIDOS DEL CARRITO
-$consul_WhichLocal = $pdo->prepare("SELECT f.nombreFarmacia, ff.codFarmaco
+$consul_WhichLocal = $pdo->prepare("SELECT f.nombrefarmacia, ff.codfarmaco
   FROM farmacias f, farmacofarmacias ff
-  WHERE ff.codFarmacia=f.codFarmacia AND ff.codFarmaco in ($place_holders)");
+  WHERE ff.codfarmacia=f.codfarmacia AND ff.codfarmaco in ($place_holders)");
 $consul_WhichLocal->execute($params);
 $resultWhichLocal = $consul_WhichLocal->fetchAll();
 // print_r($resultWhichLocal);
@@ -31,15 +31,15 @@ echo "<pre>";
 $allFarmas = [];
 $lastFarma = "";
 foreach ($resultWhichLocal as $farmacias) { //LA QUERY TRAE LAS ORDENES SEPARADAS DE SUS FARMACIAS, ACA SIMPLEMENTE SE JUNTAN 
-  $newFarma = $farmacias["nombreFarmacia"];
+  $newFarma = $farmacias["nombrefarmacia"];
   if ($lastFarma !== $newFarma) {
-    $allFarmas[$farmacias["nombreFarmacia"]] = [];
-    array_push($allFarmas[$farmacias["nombreFarmacia"]], $farmacias["nombreFarmacia"]);
+    $allFarmas[$farmacias["nombrefarmacia"]] = [];
+    array_push($allFarmas[$farmacias["nombrefarmacia"]], $farmacias["nombrefarmacia"]);
   }
 
   foreach ($cart as $item) {
     if (in_array($item, $farmacias)) {
-      array_push($allFarmas[$farmacias["nombreFarmacia"]], $item);
+      array_push($allFarmas[$farmacias["nombrefarmacia"]], $item);
       echo "<br>";
     }
   }

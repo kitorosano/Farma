@@ -71,7 +71,7 @@
 		include_once "includes/conexion.php";
 
 		//Leer de la BD y obtener los datos del usuario x farmacos
-		$consulUserFarmacos = $pdo->prepare("SELECT nombreUsuario FROM usuarios WHERE usuarios.ciUsuario=?");
+		$consulUserFarmacos = $pdo->prepare("SELECT nombreusuario FROM usuarios WHERE usuarios.ciusuario=?");
 		$consulUserFarmacos->execute(array($_SESSION['user']));
 		$nombre = $consulUserFarmacos->fetch();
 
@@ -85,7 +85,7 @@
 			<ul style="list-style: none;" class="pl-0 mb-0">
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="dropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<?php echo $nombre['nombreUsuario']; ?>
+						<?php echo $nombre['nombreusuario']; ?>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
 						<a class="dropdown-item" href=".">Mi cuenta</a>
@@ -114,8 +114,8 @@
 						<?php
 						//Leer de la BD y obtener los datos del usuario x farmacos
 						$consulUserFarmacos = $pdo->prepare("SELECT * FROM usuarios,farmacousuarios,farmacos
-                            WHERE farmacousuarios.ciUsuario=usuarios.ciUsuario AND farmacousuarios.codFarmaco=farmacos.codFarmaco
-                            AND usuarios.ciUsuario=?");
+                            WHERE farmacousuarios.ciusuario=usuarios.ciusuario AND farmacousuarios.codfarmaco=farmacos.codfarmaco
+                            AND usuarios.ciusuario=?");
 						$consulUserFarmacos->execute(array($_SESSION['user']));
 						$client = $consulUserFarmacos->fetchAll();
 
@@ -125,14 +125,14 @@
 							<div class="col my-2">
 								<div id="cardFarmaco-<?php echo $count; ?>" class="card border-dark bg-light h-100">
 									<div class="card-body">
-										<h4 class="card-title text-monospace"><?php echo $farmaco['nombreSugerido']; ?></h4>
+										<h4 class="card-title text-monospace"><?php echo $farmaco['nombresugerido']; ?></h4>
 										<hr>
-										<p class="card-text"><?php echo $farmaco['nombreFarmaco']; ?></p>
-										<p class="card-text text-muted">Recetado: <?php echo $farmaco['fechaInicio']; ?></p>
+										<p class="card-text"><?php echo $farmaco['nombrefarmaco']; ?></p>
+										<p class="card-text text-muted">Recetado: <?php echo $farmaco['fechainicio']; ?></p>
 									</div>
 									<div class="card-footer d-flex flex-row justify-content-between align-items-center">
 										<input id="inAñadir-<?php echo $count; ?>" type="number" value="0" min="0" max="<?php echo $farmaco['cantidad']; ?>" class="text-center inAñadir" style="width:30%" name="inAñadir-<?php echo $count; ?>">
-										<p class="card-text text-muted mb-0">Fecha Limite: <?php echo $farmaco['fechaFin']; ?></p>
+										<p class="card-text text-muted mb-0">Fecha Limite: <?php echo $farmaco['fechafin']; ?></p>
 										<div class="justify-content-end">
 											<button type="button" id="btnAñadir-<?php echo $count; ?>" class="btn btn-info btnAñadir">Añadir </button>
 										</div>
@@ -205,7 +205,7 @@
 					//Leer de la BD y obtener los datos del farmacias x farmacos
 					$consulPedidos = $pdo->prepare("SELECT p.*
 							FROM pedidos p,usuarios u
-							WHERE p.ciUsuario=u.ciUsuario AND u.ciUsuario=?");
+							WHERE p.ciusuario=u.ciusuario AND u.ciusuario=?");
 					$consulPedidos->execute(array($_SESSION['user']));
 					$uRegistro = $consulPedidos->fetchAll();
 					$consulPedidos->closeCursor();
@@ -278,19 +278,19 @@
 											<?php
 											$consulDetPedidos = $pdo->prepare("SELECT fa.nombreFarmacia, p.*, dp.*, f.*
                                                     FROM farmacias fa, pedidos p, detallepedidos dp, farmacos f
-                                                    WHERE dp.idPedido=p.idPedido AND dp.codFarmaco=f.codFarmaco
-                                                    AND p.codFarmacia=fa.codFarmacia AND p.idPedido=?");
-											$consulDetPedidos->execute(array($eltRegistro['idPedido']));
+                                                    WHERE dp.idpedido=p.idpedido AND dp.codfarmaco=f.codfarmaco
+                                                    AND p.codfarmacia=fa.codfarmacia AND p.idpedido=?");
+											$consulDetPedidos->execute(array($eltRegistro['idpedido']));
 											$fDetPedido = $consulDetPedidos->fetchAll();
 											// print_r($fDetPedido);
 
 											foreach ($fDetPedido as $eltDetPedido) : ?>
 												<tbody>
 													<tr>
-														<td class="text-center align-middle"><?php echo $eltDetPedido['nombreFarmaco']; ?></td>
-														<td class="text-center align-middle"><?php echo $eltDetPedido['nombreSugerido']; ?></td>
+														<td class="text-center align-middle"><?php echo $eltDetPedido['nombrefarmaco']; ?></td>
+														<td class="text-center align-middle"><?php echo $eltDetPedido['nombresugerido']; ?></td>
 														<td class="text-center align-middle"><?php echo $eltDetPedido['cantidad']; ?></td>
-														<td class="text-right align-middle">$ <?php echo ($eltDetPedido['precioUnitario'] * $eltDetPedido['cantidad']); ?></td>
+														<td class="text-right align-middle">$ <?php echo ($eltDetPedido['preciounitario'] * $eltDetPedido['cantidad']); ?></td>
 														<td class="text-center align-middle"><?php echo $eltDetPedido['nombreFarmacia']; ?></td>
 													</tr>
 												</tbody>

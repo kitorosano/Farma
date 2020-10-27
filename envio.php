@@ -8,7 +8,7 @@ $id = $_GET['id'];
 // echo $id;
 
 include_once 'includes/conexion.php';
-$consul_editar = $pdo->prepare("UPDATE `pedidos` SET `status`='en camino' WHERE `idPedido`=?");
+$consul_editar = $pdo->prepare("UPDATE `pedidos` SET `status`='en camino' WHERE `idpedido`=?");
 $consul_editar->execute(array($id));
 
 $affectedRow = $consul_editar->rowCount();;

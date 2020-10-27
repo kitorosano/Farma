@@ -10,20 +10,20 @@ if (isset($_SESSION['user'])) { //Si esta logueado
 
   // print_r($_SESSION['farmacos']);
   
-  $whichFarmas = array_unique(array_column($_SESSION["farmacos"], 'nombreFarmacia'));
+  $whichFarmas = array_unique(array_column($_SESSION["farmacos"], 'nombrefarmacia'));
   foreach ($whichFarmas as $farma) {
     // for ($i = 0; $i < count($whichFarmas); $i++) {
 
       // GET CODFARMACIA PARA EL INSERT A PARTIR DEL NOMBRE DE LA FARMACIA (NO ES LO MAS EPICO PERO BUENO ES LO QUE HAY VALORE)
-      $consul_getCodFarmacia = $pdo->prepare("SELECT codFarmacia FROM farmacias WHERE nombreFarmacia=?");
+      $consul_getCodFarmacia = $pdo->prepare("SELECT codfarmacia FROM farmacias WHERE nombrefarmacia=?");
       $consul_getCodFarmacia->execute(array($farma));
-      $codFarmacia = $consul_getCodFarmacia->fetch();
-      // print_r($codFarmacia);
+      $codfarmacia = $consul_getCodFarmacia->fetch();
+      // print_r($codfarmacia);
       
-    $pedido = [$_SESSION['user'], $codFarmacia['codFarmacia'], $date, $_SESSION['userDir'],$_SESSION['userDirParse']->lat,$_SESSION['userDirParse']->lng];
+    $pedido = [$_SESSION['user'], $codfarmacia['codfarmacia'], $date, $_SESSION['userDir'],$_SESSION['userDirParse']->lat,$_SESSION['userDirParse']->lng];
     // print_r($pedido);
 
-    $consul_sendPedido = $pdo->prepare("INSERT INTO pedidos (ciUsuario,codFarmacia,fecha,direccion,geoLat,geoLng) VALUES (?,?,?,?,?,?)");
+    $consul_sendPedido = $pdo->prepare("INSERT INTO pedidos (ciusuario,codfarmacia,fecha,direccion,geolat,geolng) VALUES (?,?,?,?,?,?)");
     $consul_sendPedido->execute($pedido);
     $res = $consul_sendPedido->fetchALl();
 
@@ -31,12 +31,12 @@ if (isset($_SESSION['user'])) { //Si esta logueado
     $consul_sendPedido->closeCursor(); //Para poder ejecutar la sig sentencia sin errores
     
     foreach ($_SESSION['farmacos'] as $elt) {
-      if($elt['nombreFarmacia'] === $farma){
+      if($elt['nombrefarmacia'] === $farma){
         
-        $detPedido = [$lastInsert, $elt['codFarmaco'], $elt['many'], $elt["precioUnitario"]];
+        $detPedido = [$lastInsert, $elt['codfarmaco'], $elt['many'], $elt["preciounitario"]];
         // print_r($detPedido);
         
-        $consul_sendDetPedido = $pdo->prepare("INSERT INTO detallepedidos (idPedido,codFarmaco,cantidad,precio) VALUES (?,?,?,?)");
+        $consul_sendDetPedido = $pdo->prepare("INSERT INTO detallepedidos (idpedido,codfarmaco,cantidad,precio) VALUES (?,?,?,?)");
         $consul_sendDetPedido->execute($detPedido);
       } 
     }

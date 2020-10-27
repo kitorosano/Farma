@@ -9,7 +9,7 @@ if ($_POST) {
 
 	// actualizar stock
 
-	$consul_editar = $pdo->prepare('UPDATE farmacofarmacias SET stock=? WHERE codFarmacia=? AND codFarmaco=?');
+	$consul_editar = $pdo->prepare('UPDATE farmacofarmacias SET stock=? WHERE codfarmacia=? AND codfarmaco=?');
 	$consul_editar->execute(array($stock, $_SESSION['farma'], $cod));
 	$result = $consul_editar->fetchAll();
 
@@ -86,7 +86,7 @@ if ($_POST) {
 		include_once "includes/conexion.php";
 
 		//Leer de la BD y obtener los datos del usuario x farmacos
-		$consulUserFarmacos = $pdo->prepare("SELECT nombreFarmacia, fgeoLat, fgeoLng FROM farmacias WHERE farmacias.codFarmacia=?");
+		$consulUserFarmacos = $pdo->prepare("SELECT nombreFarmacia, fgeoLat, fgeoLng FROM farmacias WHERE farmacias.codfarmacia=?");
 		$consulUserFarmacos->execute(array($_SESSION['farma']));
 		$data = $consulUserFarmacos->fetch();
 
@@ -129,8 +129,8 @@ if ($_POST) {
 					//Leer de la BD y obtener los datos del farmacias x farmacos
 					$consulPedidos = $pdo->prepare("SELECT f.*, p.*, u.nombreUsuario
 							FROM farmacias f,pedidos p,usuarios u
-							WHERE p.codFarmacia=f.codFarmacia AND p.ciUsuario=u.ciUsuario
-							AND f.codFarmacia=?  AND p.status='pendiente'");
+							WHERE p.codfarmacia=f.codfarmacia AND p.ciUsuario=u.ciUsuario
+							AND f.codfarmacia=?  AND p.status='pendiente'");
 					$consulPedidos->execute(array($_SESSION['farma']));
 					$fPedido = $consulPedidos->fetchAll();
 					$consulPedidos->closeCursor();
@@ -213,7 +213,7 @@ if ($_POST) {
 											<?php
 											$consulDetPedidos = $pdo->prepare("SELECT *
                                                     FROM pedidos p, detallepedidos dp, farmacos f
-                                                    WHERE dp.idPedido=p.idPedido AND dp.codFarmaco=f.codFarmaco
+                                                    WHERE dp.idPedido=p.idPedido AND dp.codfarmaco=f.codfarmaco
                                                     AND p.idPedido=?");
 											$consulDetPedidos->execute(array($eltPedido['idPedido']));
 											$fDetPedido = $consulDetPedidos->fetchAll();
@@ -222,7 +222,7 @@ if ($_POST) {
 											foreach ($fDetPedido as $eltDetPedido) : ?>
 												<tbody>
 													<tr>
-														<td class="text-center align-middle"><?php echo $eltDetPedido['codFarmaco']; ?></td>
+														<td class="text-center align-middle"><?php echo $eltDetPedido['codfarmaco']; ?></td>
 														<td class="text-center align-middle"><?php echo $eltDetPedido['nombreFarmaco']; ?></td>
 														<td class="text-center align-middle"><?php echo $eltDetPedido['nombreSugerido']; ?></td>
 														<td class="text-right align-middle">$ <?php echo $eltDetPedido['precioUnitario']; ?></td>
@@ -294,8 +294,8 @@ if ($_POST) {
 				<?php
 				//Leer de la BD y obtener el stock de los farmacos de la farmacia
 				$consulFarmaFarmacos = $pdo->prepare("SELECT * FROM farmacias,farmacofarmacias,farmacos
-                            WHERE farmacofarmacias.codFarmacia=farmacias.codFarmacia AND farmacofarmacias.codFarmaco=farmacos.codFarmaco
-                            AND farmacias.codFarmacia=?");
+                            WHERE farmacofarmacias.codfarmacia=farmacias.codfarmacia AND farmacofarmacias.codfarmaco=farmacos.codfarmaco
+                            AND farmacias.codfarmacia=?");
 				$consulFarmaFarmacos->execute(array($_SESSION['farma']));
 				$farmacos = $consulFarmaFarmacos->fetchAll();
 				// echo "<pre>";
@@ -307,7 +307,7 @@ if ($_POST) {
 					<form method="POST">
 						<li class="list-group-item lh-condensed">
 							<div class="row">
-								<input type="hidden" name="cod" value="<?php echo $farmaco['codFarmaco'] ?>">
+								<input type="hidden" name="cod" value="<?php echo $farmaco['codfarmaco'] ?>">
 								<!-- NOMBRE -->
 								<div class="col-4 text-left">
 									<h6 class="my-0"><?php echo $farmaco['nombreFarmaco'] ?></h6>

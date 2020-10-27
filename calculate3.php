@@ -19,10 +19,10 @@ echo "<pre>";
 if (count($farmaData) === 1) { //TODO EN 1 sola farmacia
   $place_holders = $_SESSION['placeholders'];
 
-  $consul_getData = $pdo->prepare("SELECT fa.nombreFarmacia,fo.*
+  $consul_getData = $pdo->prepare("SELECT fa.nombrefarmacia,fo.*
     FROM farmacias fa,farmacofarmacias ff,farmacos fo
-    WHERE ff.codFarmacia=fa.codFarmacia AND ff.codFarmaco=fo.codFarmaco 
-    AND fa.nombreFarmacia = ? AND fo.codFarmaco in ($place_holders)");
+    WHERE ff.codfarmacia=fa.codfarmacia AND ff.codfarmaco=fo.codfarmaco 
+    AND fa.nombrefarmacia = ? AND fo.codfarmaco in ($place_holders)");
   $consul_getData->execute($farmaData[0]);
   $resultKnowFarma = $consul_getData->fetchAll();
 
@@ -49,10 +49,10 @@ if (count($farmaData) === 1) { //TODO EN 1 sola farmacia
     $place_holders = implode(',', array_fill(0, count($params), '?')); //PERMITE SUSTITUIR EN EL OPERADOR IN DE LA CONSULTA
 
 
-    $consul_getData = $pdo->prepare("SELECT fa.nombreFarmacia, fo.*
+    $consul_getData = $pdo->prepare("SELECT fa.nombrefarmacia, fo.*
       FROM farmacias fa,farmacofarmacias ff,farmacos fo
-      WHERE ff.codFarmacia=fa.codFarmacia AND ff.codFarmaco=fo.codFarmaco 
-      AND fa.nombreFarmacia = ? AND fo.codFarmaco in ($place_holders)");
+      WHERE ff.codfarmacia=fa.codfarmacia AND ff.codfarmaco=fo.codfarmaco 
+      AND fa.nombrefarmacia = ? AND fo.codfarmaco in ($place_holders)");
     $consul_getData->execute($farma);
     $resultKnowFarma = $consul_getData->fetchAll();  //Traer datos del farmaco para mostrar en el UI pedir.php
 
