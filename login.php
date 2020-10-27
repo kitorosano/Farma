@@ -15,7 +15,7 @@ if (!$result) { //verificar result
   echo '<br>No existe el usuario para iniciar la sesion';
   die();
 }
-var_dump(password_verify($userPass, $result['contrasenausuario']));
+
 if (password_verify($userPass, $result['contrasenausuario'])) {
   $_SESSION['user'] = $userCi;
 } else {
@@ -23,4 +23,4 @@ if (password_verify($userPass, $result['contrasenausuario'])) {
   die();
 }
 
-// header('Location: .'); //REDIRECCIONA LA PAGINA A SI MISMA
+header('Location: .'); //REDIRECCIONA LA PAGINA A SI MISMA
