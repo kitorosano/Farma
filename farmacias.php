@@ -135,6 +135,8 @@ if ($_POST) {
 					$fPedido = $consulPedidos->fetchAll();
 					$consulPedidos->closeCursor();
 
+					print_r($fPedido);
+
 					if (count($fPedido) === 0) : ?>
 
 						<div class="card border-dark bg-light mt-5">
