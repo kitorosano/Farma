@@ -142,7 +142,7 @@
 
 						<?php $count++;
 						endforeach ?>
-						<input type="hidden" name="count" value="<?php echo $count; ?>">
+						<input id="count" type="hidden" name="count" value="<?php echo $count; ?>">
 						<div id="errorDiv" class="invalid-feedback col-md-12">
 							* Asegurate de AÑADIR una cantidad del farmaco a pedir
 						</div>
@@ -547,7 +547,8 @@
 			});
 
 			// ACCION BOTON AÑADIR/EDITAR DE LOS FARMACOS
-			for (let i = 1; i < <?php echo $count; ?>; i++) {
+			let count = document.getElementById('count').value
+			for (let i = 1; i < count ; i++) {
 				// let toggle = true;
 				$('#btnAñadir-' + i).click(function() {
 					$("#inAñadir-" + i).attr('readonly', (index, attr) => {
