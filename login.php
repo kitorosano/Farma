@@ -11,9 +11,9 @@ $consul_verifyuser = $pdo->prepare($sql);
 $consul_verifyuser->execute(array($userCi));
 $result = $consul_verifyuser->fetch();
 
-echo "<pr>";
+echo "<pre>";
 print_r($result);
-echo "</pr>";
+echo "</pre>";
 
 
 if (!$result) { //verificar result
