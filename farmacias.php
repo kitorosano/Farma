@@ -89,6 +89,7 @@ if ($_POST) {
 		$consulUserFarmacos = $pdo->prepare("SELECT nombrefarmacia, fgeolat, fgeolng FROM farmacias WHERE farmacias.codfarmacia=?");
 		$consulUserFarmacos->execute(array($_SESSION['farma']));
 		$data = $consulUserFarmacos->fetch();
+		$consulUserFarmacos->closeCursor();
 
 	?>
 		<!-- BARRA ARRIBA -->
@@ -127,10 +128,10 @@ if ($_POST) {
 				<div class="accordion w-100 my-2" id="listaPedidos">
 					<?php
 					//Leer de la BD y obtener los datos del farmacias x farmacos
-					$consulPedidos = $pdo->prepare("SELECT f.*, p.*, u.nombreusuario
+					$consulPedidos = $pdo->prepare('SELECT f.*, p.*, u.nombreusuario
 							FROM farmacias f,pedidos p,usuarios u
 							WHERE p.codfarmacia=f.codfarmacia AND p.ciusuario=u.ciusuario
-							AND f.codfarmacia=?  AND p.status='pendiente'");
+							AND f.codfarmacia=?  AND p.status="pendiente"');
 					$consulPedidos->execute(array($_SESSION['farma']));
 					$fPedido = $consulPedidos->fetchAll();
 					$consulPedidos->closeCursor();
