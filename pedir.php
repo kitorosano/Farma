@@ -87,14 +87,14 @@ print_r($_SESSION['farmacos']);
               <div class="row">
 
                 <div class="col-8">
-                  <h6 class="my-0"><?php echo $item['nombreSugerido'] ?></h6>
-                  <small class="text-muted"><?php echo $item['nombreFarmacia'] ?></small>
+                  <h6 class="my-0"><?php echo $item['nombresugerido'] ?></h6>
+                  <small class="text-muted"><?php echo $item['nombrefarmacia'] ?></small>
                 </div>
                 <div class="col-4 text-right">
                   <span>
                     <span class="badge badge-primary badge-pill"><?php echo $item['many'] ?></span>
                     <!-- <span class="px-2">x</span> -->
-                    <span class="text-muted" style="font-size: 0.9rem;"> x $<?php echo $item['precioUnitario'] ?></span>
+                    <span class="text-muted" style="font-size: 0.9rem;"> x $<?php echo $item['preciounitario'] ?></span>
                   </span>
                 </div>
              </div>
@@ -107,10 +107,10 @@ print_r($_SESSION['farmacos']);
             <strong>$
               <?php
               $prices = 0;
-              // $prices = array_column($_SESSION['farmacos'], 'precioUnitario');
+              // $prices = array_column($_SESSION['farmacos'], 'preciounitario');
               foreach ($_SESSION['farmacos'] as $farmaco) {
                 //print_r($farmaco);
-                $prices += $farmaco['precioUnitario'] * $farmaco['many'];
+                $prices += $farmaco['preciounitario'] * $farmaco['many'];
               };
               // $total = 0;
               // foreach ($prices as $price) {
