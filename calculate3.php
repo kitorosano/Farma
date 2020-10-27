@@ -74,7 +74,7 @@ if (count($farmaData) === 1) { //TODO EN 1 sola farmacia
   }
 }
 
-// print_r($_SESSION['farmacos']);
+print_r($_SESSION['farmacos']);
 echo "</pre>";
 
-header('Location: pedir.php');
+// header('Location: pedir.php');
