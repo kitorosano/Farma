@@ -6,7 +6,7 @@ $userCi = $_POST['ciUser'];
 $userPass = $_POST['passUser'];
 
 // //VERIFICAR SI YA EXISTE EL USUARIO NUEVO EN LA BD//
-$sql = 'SELECT * FROM usuarios WHERE ciUsuario=?';
+$sql = 'SELECT * FROM usuarios WHERE ciUsuario=$1';
 $consul_verifyuser = $pdo->prepare($sql);
 $consul_verifyuser->execute(array($userCi));
 $result = $consul_verifyuser->fetch();

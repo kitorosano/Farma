@@ -17,7 +17,7 @@ try {
     $db["user"],
     $db["pass"],
     ltrim($db["path"], "/")
-));
+  ));
   // print_r("Conectado a la base de datos! <br><br><br>");
 
 
