@@ -298,9 +298,9 @@ if ($_POST) {
                             AND farmacias.codfarmacia=?");
 				$consulFarmaFarmacos->execute(array($_SESSION['farma']));
 				$farmacos = $consulFarmaFarmacos->fetchAll();
-				echo "<pre>";
-				print_r($farmacos);
-				echo "<!pre>";
+				// echo "<pre>";
+				// print_r($farmacos);
+				// echo "<!pre>";
 				$count = 1;
 				foreach ($farmacos as $farmaco) : ?>
 
