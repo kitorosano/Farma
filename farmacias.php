@@ -55,7 +55,7 @@ if ($_POST) {
 				<div class="container shadow p-4 mb-2 bg-white rounded">
 
 					<h4 class="mb-4">Inicio de Sesion Farmacias</h4>
-					<form id="loginform" class="form-signin">
+					<form id="formLogin" class="form-signin">
 
 						<label for="codFarma">Codigo Farmacia:</label>
 						<input name="codFarma" type="text" class="form-control mb-3" required>
