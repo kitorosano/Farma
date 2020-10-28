@@ -129,9 +129,9 @@ if ($_POST) {
 					$consulPedidos = $pdo->prepare('SELECT f.*, p.*, u.nombreusuario
 							FROM farmacias f,pedidos p,usuarios u
 							WHERE p.codfarmacia=f.codfarmacia AND p.ciusuario=u.ciusuario
-							AND f.codfarmacia=?  AND p.estado="pendiente"');
+							AND f.codfarmacia=? AND p.estado="pendiente"');
 					$consulPedidos->execute(array($_SESSION['farma']));
-					$fPedido = $consulPedidos->fetch();
+					$fPedido = $consulPedidos->fetchAll();
 					$consulPedidos->closeCursor();
 
 					print_r($fPedido);
