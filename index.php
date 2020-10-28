@@ -39,25 +39,23 @@
 				<div class="container shadow p-4 mb-2 bg-white rounded">
 
 					<h4 class="mb-4">Inicio de Sesion</h4>
-					<form action="login.php" method="POST">
+					<form id="formLogin">
 
 						<label for="ciUser"> Documento CI:</label>
 						<input type="text" name="ciUser" class="form-control mb-3 input" autocomplete="false" value="" required>
-						<div class="invalid-feedback">
-
-						</div>
+						<div class="invalid-feedback"></div>
 
 						<label for="passUser"> Contraseña:</label>
 						<input type="password" name="passUser" class="form-control mb-3 input" autocomplete="false" value="" required>
-						<div class="invalid-feedback">
-
-						</div>
+						<div class="invalid-feedback"></div>
 
 						<div class="mt-4 d-flex justify-content-between">
 							<a href="farmacias.php">Iniciar como farmacia?</a>
 							<button class="btn btn-primary" type="submit">Entrar</button>
 						</div>
 					</form>
+
+					<div class="mt-5" id="respuesta"></div>
 				</div>
 			</div>
 			<!-- FORMULARIOS -->
@@ -342,6 +340,33 @@
 	<script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
 	<script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js" type="text/javascript" charset="utf-8"></script>
 
+	<script>
+		let formulario = document.getElementById('formLogin');
+		let respuesta = document.getElementById('respuesta');
+
+		formulario.addEventListener('submit', function(e) {
+			e.preventDefault(); //evita procesar el form al url
+
+			let datos = new FormData(formulario);
+
+			fetch('login.php', {
+					method: 'POST',
+					body: datos
+				})
+				.then(res => res.json())
+				.then(data => {
+					console.log(data);
+					if (data) {
+						respuesta.innerHTML = (`
+						<div class="alert alert-danger" role="alert">
+							${data}
+						</div>
+						`)
+					}
+				});
+		});
+	</script>
+
 	<?php if (isset($_SESSION['user'])) : ?>
 		<script type="text/javascript">
 			/* Se utilizo Here API. */
@@ -548,7 +573,7 @@
 
 			// ACCION BOTON AÑADIR/EDITAR DE LOS FARMACOS
 			let count = document.getElementById('count').value
-			for (let i = 1; i < count ; i++) {
+			for (let i = 1; i < count; i++) {
 				// let toggle = true;
 				$('#btnAñadir-' + i).click(function() {
 					$("#inAñadir-" + i).attr('readonly', (index, attr) => {
@@ -585,13 +610,13 @@
 
 			for (let i = 1; i < $('.mycard').length; i++) {
 				let status = $('#mycard-' + i).find(".status").text();
-				if ( status == 'en camino') {
+				if (status == 'en camino') {
 					$('#mycard-' + i).removeClass('bg-light');
 					$('#mycard-' + i).prop('style', 'background-color: rgb(246, 249, 171); width: 900px;')
 
 					$('#fecha-' + i).removeClass('text-muted');
-				} else if(status == 'entregado') {
-					
+				} else if (status == 'entregado') {
+
 					$('#mycard-' + i).prop('style', 'background-color: rgb(197, 253, 182); width: 900px;')
 				}
 			}

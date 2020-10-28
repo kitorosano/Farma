@@ -11,16 +11,10 @@ $consul_verifyuser = $pdo->prepare($sql);
 $consul_verifyuser->execute(array($userCi));
 $result = $consul_verifyuser->fetch();
 
-if (!$result) { //verificar result
-  echo '<br>No existe el usuario para iniciar la sesion';
-  die();
-}
-
-if (password_verify($userPass, $result['contrasenausuario'])) {
+if (!$result) { //verificar result echo json_encode('error');
+  echo json_encode('No existe el usuario para iniciar la sesion');
+} else if (password_verify($userPass, $result['contrasenausuario'])) {
   $_SESSION['user'] = $userCi;
 } else {
-  echo 'Password is not valid!';
-  die();
+  echo json_encode('Contraseña incorrecta!');
 }
-
-header('Location: .'); //REDIRECCIONA LA PAGINA A SI MISMA
