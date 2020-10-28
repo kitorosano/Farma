@@ -19,7 +19,7 @@ echo "<pre>";
 if (count($farmaData) === 1) { //TODO EN 1 sola farmacia
   $place_holders = $_SESSION['placeholders'];
 
-  $consul_getData = $pdo->prepare("SELECT fa.nombrefarmacia,fa.preciounitario, fo.*
+  $consul_getData = $pdo->prepare("SELECT fa.nombrefarmacia,ff.preciounitario, fo.*
     FROM farmacias fa,farmacofarmacias ff,farmacos fo
     WHERE ff.codfarmacia=fa.codfarmacia AND ff.codfarmaco=fo.codfarmaco 
     AND fa.nombrefarmacia = ? AND fo.codfarmaco in ($place_holders)");
