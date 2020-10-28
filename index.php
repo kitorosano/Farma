@@ -340,32 +340,7 @@
 	<script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
 	<script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js" type="text/javascript" charset="utf-8"></script>
 
-	<script>
-		let formulario = document.getElementById('formLogin');
-		let respuesta = document.getElementById('respuesta');
 
-		formulario.addEventListener('submit', function(e) {
-			e.preventDefault(); //evita procesar el form al url
-
-			let datos = new FormData(formulario);
-
-			fetch('login.php', {
-					method: 'POST',
-					body: datos
-				})
-				.then(res => res.json())
-				.then(data => {
-					console.log(data);
-					if (data) {
-						respuesta.innerHTML = (`
-						<div class="alert alert-danger" role="alert">
-							${data}
-						</div>
-						`)
-					}
-				});
-		});
-	</script>
 
 	<?php if (isset($_SESSION['user'])) : ?>
 		<script type="text/javascript">
@@ -620,6 +595,34 @@
 					$('#mycard-' + i).prop('style', 'background-color: rgb(197, 253, 182); width: 900px;')
 				}
 			}
+		</script>
+
+	<?php else : ?>
+		<script>
+			let formulario = document.getElementById('formLogin');
+			let respuesta = document.getElementById('respuesta');
+
+			formulario.addEventListener('submit', function(e) {
+				e.preventDefault(); //evita procesar el form al url
+
+				let datos = new FormData(formulario);
+
+				fetch('login.php', {
+						method: 'POST',
+						body: datos
+					})
+					.then(res => res.json())
+					.then(data => {
+						console.log(data);
+						if (data) {
+							respuesta.innerHTML = (`
+						<div class="alert alert-danger" role="alert">
+							${data}
+						</div>
+						`)
+						}
+					});
+			});
 		</script>
 	<?php endif ?>
 
