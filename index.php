@@ -614,7 +614,7 @@
 					.then(res => res.json())
 					.then(data => {
 						console.log(data);
-						if (data) {
+						if (data !== "login") {
 							respuesta.innerHTML = (`
 						<div class="alert alert-danger" role="alert">
 							${data}
