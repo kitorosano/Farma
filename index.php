@@ -207,7 +207,7 @@
 					$consulPedidos->execute(array($_SESSION['user']));
 					$uRegistro = $consulPedidos->fetchAll();
 					$consulPedidos->closeCursor();
-					// print_r($uRegistro);
+					print_r($uRegistro);
 
 					if (count($uRegistro) === 0) : ?>
 
@@ -274,7 +274,7 @@
 												</tr>
 											</thead>
 											<?php
-											$consulDetPedidos = $pdo->prepare("SELECT fa.nombreFarmacia, p.*, dp.*, f.*
+											$consulDetPedidos = $pdo->prepare("SELECT fa.nombrefarmacia, p.*, dp.*, f.*
                                                     FROM farmacias fa, pedidos p, detallepedidos dp, farmacos f
                                                     WHERE dp.idpedido=p.idpedido AND dp.codfarmaco=f.codfarmaco
                                                     AND p.codfarmacia=fa.codfarmacia AND p.idpedido=?");
@@ -288,8 +288,8 @@
 														<td class="text-center align-middle"><?php echo $eltDetPedido['nombrefarmaco']; ?></td>
 														<td class="text-center align-middle"><?php echo $eltDetPedido['nombresugerido']; ?></td>
 														<td class="text-center align-middle"><?php echo $eltDetPedido['cantidad']; ?></td>
-														<td class="text-right align-middle">$ <?php echo ($eltDetPedido['preciounitario'] * $eltDetPedido['cantidad']); ?></td>
-														<td class="text-center align-middle"><?php echo $eltDetPedido['nombreFarmacia']; ?></td>
+														<td class="text-right align-middle">$ <?php echo $eltDetPedido['precio']; ?></td>
+														<td class="text-center align-middle"><?php echo $eltDetPedido['nombrefarmacia']; ?></td>
 													</tr>
 												</tbody>
 											<?php endforeach; ?>
