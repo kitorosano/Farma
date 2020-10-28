@@ -6,6 +6,8 @@ if (!isset($_SESSION['user'])) { //Si no esta logueado lo echa
   header('Location: .');
 };
 
+print_r($_SESSION);
+
 ?>
 <!DOCTYPE html>
 <html lang="es">

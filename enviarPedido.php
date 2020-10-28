@@ -28,7 +28,6 @@ if (isset($_SESSION['user'])) { //Si esta logueado
     $res = $consul_sendPedido->fetchALl();
 
     $lastInsert = $pdo->lastInsertId(); //Obtener el ultimo id agregado (idFarmacia)
-    print_r($lastInsert);
     $consul_sendPedido->closeCursor(); //Para poder ejecutar la sig sentencia sin errores
     
     foreach ($_SESSION['farmacos'] as $elt) {
