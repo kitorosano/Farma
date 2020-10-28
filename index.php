@@ -184,7 +184,7 @@
 									<div><button type="button" class="btn btn-danger" id="btnCancelarMap" data-dismiss="modal">Cancelar</button></div>
 									<div>
 										<button type="button" class="btn btn-secondary" id="btnSeñalarMap">Señalar en el mapa</button>
-										<button type="submit" class="btn btn-primary" id="btnConfirmMap">Confirmar</button>
+										<button type="submit" class="btn btn-primary" id="btnConfirmMap" disabled>Confirmar</button>
 									</div>
 								</div>
 							</div>
@@ -478,6 +478,9 @@
 						}
 					}
 				}, false);
+
+				
+				$('#btnConfirmMap').removeProp('disabled')
 
 			});
 
