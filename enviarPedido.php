@@ -11,7 +11,6 @@ if (isset($_SESSION['user'])) { //Si esta logueado
   // print_r($_SESSION['farmacos']);
   
   $whichFarmas = array_unique(array_column($_SESSION["farmacos"], 'nombrefarmacia'));
-  print_r($whichFarmas);
   foreach ($whichFarmas as $farma) {
     // for ($i = 0; $i < count($whichFarmas); $i++) {
 
@@ -19,7 +18,7 @@ if (isset($_SESSION['user'])) { //Si esta logueado
       $consul_getCodFarmacia = $pdo->prepare("SELECT codfarmacia FROM farmacias WHERE nombrefarmacia=?");
       $consul_getCodFarmacia->execute(array($farma));
       $codfarmacia = $consul_getCodFarmacia->fetch();
-      // print_r($codfarmacia);
+      print_r($_SESSION['userDirParse']);
       
     $pedido = [$_SESSION['user'], $codfarmacia['codfarmacia'], $date, $_SESSION['userDir'],$_SESSION['userDirParse']->lat,$_SESSION['userDirParse']->lng];
     print_r($pedido);
