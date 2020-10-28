@@ -55,7 +55,7 @@ if ($_POST) {
 				<div class="container shadow p-4 mb-2 bg-white rounded">
 
 					<h4 class="mb-4">Inicio de Sesion Farmacias</h4>
-					<form action="login_farmacias.php" method="POST" class="form-signin">
+					<form id="loginform" class="form-signin">
 
 						<label for="codFarma">Codigo Farmacia:</label>
 						<input name="codFarma" type="text" class="form-control mb-3" required>
@@ -391,6 +391,7 @@ if ($_POST) {
 	<script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
 	<script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js" type="text/javascript" charset="utf-8"></script>
 
+	<?php if (isset($_SESSION['farma'])) : ?>
 	<script>
 		// MAPA
 		/* Se utilizo Here API. */
@@ -420,9 +421,7 @@ if ($_POST) {
 			});
 		};
 	</script>
-
 	<script src="js/getMap.js"></script>
-
 	<script>
 		//TRANSICION DE BOTONES MENU
 		$("#btnBandeja").click(function() {
@@ -572,6 +571,36 @@ if ($_POST) {
 			input.value = parseInt(input.value) + 1;
 		}
 	</script>
+	<?php else : ?>
+		<script>
+			let formulario = document.getElementById('formLogin');
+			let respuesta = document.getElementById('respuesta');
+
+			formulario.addEventListener('submit', function(e) {
+				e.preventDefault(); //evita procesar el form al url
+
+				let datos = new FormData(formulario);
+
+				fetch('login_farmacias.php', {
+						method: 'POST',
+						body: datos
+					})
+					.then(res => res.json())
+					.then(data => {
+						console.log(data);
+						if (data !== "login") {
+							respuesta.innerHTML = (`
+						<div class="alert alert-danger" role="alert">
+							${data}
+						</div>
+						`)
+						} else {
+							window.location.reload()
+						}
+					});
+			});
+		</script>
+	<?php endif ?>
 
 </body>
 
