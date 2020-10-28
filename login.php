@@ -15,7 +15,7 @@ if (!$result) { //verificar result echo json_encode('error');
   echo json_encode('No existe el usuario para iniciar la sesion');
 } else if (password_verify($userPass, $result['contrasenausuario'])) {
   $_SESSION['user'] = $userCi;
-  echo json_encode("login")
-} else {
+  echo json_encode("login");
+} else {  
   echo json_encode('Contraseña incorrecta!');
 }
