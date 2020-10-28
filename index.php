@@ -480,8 +480,7 @@
 				}, false);
 
 				
-				$('#btnConfirmMap').removeProp('disabled')
-
+				$('btnConfirmMap').removeProp('disabled')
 			});
 
 			let puedeSeñalar = false;
