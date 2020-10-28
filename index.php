@@ -207,7 +207,7 @@
 					$consulPedidos->execute(array($_SESSION['user']));
 					$uRegistro = $consulPedidos->fetchAll();
 					$consulPedidos->closeCursor();
-					print_r($uRegistro);
+					// print_r($uRegistro);
 
 					if (count($uRegistro) === 0) : ?>
 
