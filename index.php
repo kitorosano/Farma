@@ -620,6 +620,8 @@
 							${data}
 						</div>
 						`)
+						} else {
+							<?php header('Location: .'); //REDIRECCIONA LA PAGINA A SI MISMA?>
 						}
 					});
 			});
