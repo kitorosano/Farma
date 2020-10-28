@@ -610,7 +610,7 @@
 
 				let datos = new FormData(formulario);
 
-				fetch('login_farmacias.php', {
+				fetch('login.php', {
 						method: 'POST',
 						body: datos
 					})
