@@ -51,4 +51,4 @@ if (isset($_SESSION['user'])) { //Si esta logueado
   $_SESSION['user'] = $user; //reiniciarmos al usuario para que cuando redireccione ya este logueado
 }
 
-// header("location: .");
+header("location: .");
