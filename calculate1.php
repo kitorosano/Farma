@@ -24,9 +24,9 @@ $client = $consulUserFarmacos->fetchAll();
 $_SESSION['userDir'] = $_POST['inAddress'];
 $_SESSION['userDirParse'] = json_decode($_POST['inAddressParse']);
 $_SESSION['count'] = $_POST['count'];
-// echo "<pre>";
-// print_r($_SESSION['userDirParse']->lat );
-// echo "</pre>";
+echo "<pre>";
+print_r($_SESSION['userDirParse']);
+echo "</pre>";
 
 $cart = []; //solo cod de farmaco
 $cartMany = []; //CUAL cod del farmaco y CUANTA cantidad se selecciono
@@ -77,10 +77,10 @@ $farmaData = $consul_GeoLocation->fetchAll();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>calculando.</title>
 
-  <form id="form1" action="calculate2.php" method="POST">
+  <!-- <form id="form1" action="calculate2.php" method="POST"> -->
     <input name="farmaciaDistancia" id="farmaciaDistancia" hidden value="" />
     <input name="casaDireccion" id="casaDireccion" hidden value="" />
-  </form>
+  <!-- </form> -->
 
 
   <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
@@ -146,7 +146,7 @@ $farmaData = $consul_GeoLocation->fetchAll();
       }
 
       document.getElementById("farmaciaDistancia").value = JSON.stringify(farmaciaDistancia);
-      document.getElementById("form1").submit();
+      // document.getElementById("form1").submit();
     };
 
     start();
