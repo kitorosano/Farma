@@ -49,13 +49,14 @@
 						<input type="password" name="passUser" class="form-control mb-3 input" autocomplete="false" value="" required>
 						<div class="invalid-feedback"></div>
 
+						<div class="" id="respuesta"></div>
+
 						<div class="mt-4 d-flex justify-content-between">
 							<a href="farmacias.php">Iniciar como farmacia?</a>
 							<button class="btn btn-primary" type="submit">Entrar</button>
 						</div>
 					</form>
 
-					<div class="mt-5" id="respuesta"></div>
 				</div>
 			</div>
 			<!-- FORMULARIOS -->
@@ -609,7 +610,7 @@
 
 				let datos = new FormData(formulario);
 
-				fetch('login.php', {
+				fetch('login_farmacias.php', {
 						method: 'POST',
 						body: datos
 					})

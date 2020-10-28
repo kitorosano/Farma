@@ -59,23 +59,19 @@ if ($_POST) {
 
 						<label for="codFarma">Codigo Farmacia:</label>
 						<input name="codFarma" type="text" class="form-control mb-3" required>
-						<div class="invalid-feedback">
-
-						</div>
+						<!-- <div class="invalid-feedback"></div> -->
 
 						<label for="passFarma mb-3">Contraseña:</label>
 						<input name="passFarma" type="password" class="form-control" required>
-						<div class="invalid-feedback">
+						<!-- <div class="invalid-feedback"></div> -->
+						<div class="" id="respuesta"></div>
 
-						</div>
-
-						<div class="d-flex justify-content-between">
+						<div class="mt-4 d-flex justify-content-between">
 							<a href="." class="btn btn-link">Volver</a>
 							<button class="btn btn-primary" type="submit">Entrar</button>
 						</div>
 					</form>
 					
-					<div class="mt-5" id="respuesta"></div>
 				</div>
 			</div>
 			<!-- FORMULARIOS -->
