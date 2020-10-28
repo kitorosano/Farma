@@ -74,6 +74,8 @@ if ($_POST) {
 							<button class="btn btn-primary" type="submit">Entrar</button>
 						</div>
 					</form>
+					
+					<div class="mt-5" id="respuesta"></div>
 				</div>
 			</div>
 			<!-- FORMULARIOS -->
