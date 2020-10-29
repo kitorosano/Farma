@@ -369,6 +369,38 @@
 			ui.getControl("zoom").setAlignment("bottom-right");
 			ui.getControl("scalebar").setAlignment("bottom-right");
 
+			// EVENTO PARA MOVER EL MARKER
+			map.addEventListener('dragstart', ev => { //AL COMENZAR EL ARRASTRE DEL MARCADOR
+				if (puedeSeñalar) {
+					var target = ev.target;
+					if (target instanceof H.map.Marker || target instanceof H.map.DomMarker) mapBehavior.disable();
+				}
+			}, false);
+
+			map.addEventListener('dragend', async ev => { //AL TERMINAR EL ARRASTRE DEL MARCADOR
+				if (puedeSeñalar) {
+					var target = ev.target;
+					if (target instanceof H.map.Marker || target instanceof H.map.DomMarker) {
+						mapBehavior.enable();
+						map.setCenter(target.getGeometry());
+
+						// console.log(markerReturn.getGeometry());
+						document.getElementById("inAddressParse").value = JSON.stringify(target.getGeometry());
+
+					}
+				}
+			}, false);
+
+			map.addEventListener('drag', ev => { //AL MOVER EL MARCADOR
+				if (puedeSeñalar) {
+					var target = ev.target,
+						pointer = ev.currentPointer;
+					if (target instanceof H.map.Marker) {
+						target.setGeometry(map.screenToGeo(pointer.viewportX, pointer.viewportY));
+					}
+				}
+			}, false);
+
 			// direc to geo
 			const geocoder = (query) => {
 				return new Promise((resolve, reject) => {
@@ -452,49 +484,13 @@
 				let from = await geocoder($('#inAddress').val());
 				document.getElementById("inAddressParse").value = JSON.stringify(from);
 
-				// if (!mapReturn) {
-				// 	mapReturn = mapStart();
-				// 	mapBehavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(mapReturn));
-				// }
-
 				markerReturn = marker(from);
-				// console.log(markerReturn.getGeometry());
 
-				mapReturn.addObject(markerReturn);
-				mapReturn.setCenter(from);
-				mapReturn.setZoom(17);
+				map.addObject(markerReturn);
+				map.setCenter(from);
+				map.setZoom(17);
 
-				// EVENTO PARA MOVER EL MARKER
-				mapReturn.addEventListener('dragstart', ev => { //AL COMENZAR EL ARRASTRE DEL MARCADOR
-					if (puedeSeñalar) {
-						var target = ev.target;
-						if (target instanceof H.map.Marker || target instanceof H.map.DomMarker) mapBehavior.disable();
-					}
-				}, false);
 
-				mapReturn.addEventListener('dragend', async ev => { //AL TERMINAR EL ARRASTRE DEL MARCADOR
-					if (puedeSeñalar) {
-						var target = ev.target;
-						if (target instanceof H.map.Marker || target instanceof H.map.DomMarker) {
-							mapBehavior.enable();
-							mapReturn.setCenter(target.getGeometry());
-
-							// console.log(markerReturn.getGeometry());
-							document.getElementById("inAddressParse").value = JSON.stringify(markerReturn.getGeometry());
-
-						}
-					}
-				}, false);
-
-				mapReturn.addEventListener('drag', ev => { //AL MOVER EL MARCADOR
-					if (puedeSeñalar) {
-						var target = ev.target,
-							pointer = ev.currentPointer;
-						if (target instanceof H.map.Marker) {
-							target.setGeometry(mapReturn.screenToGeo(pointer.viewportX, pointer.viewportY));
-						}
-					}
-				}, false);
 
 
 				$('#btnConfirmMap').prop('disabled', false)
