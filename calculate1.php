@@ -44,9 +44,9 @@ for ($i = 1; $i < $_SESSION['count']; $i++) { //Count empieza desde 1
 
 $_SESSION['cart'] = $cart;
 $_SESSION['cartMany'] = $cartMany;
-echo "<pre>";
-print_r($_SESSION['cartMany']);
-echo "</pre>";
+// echo "<pre>";
+// print_r($_SESSION['cartMany']);
+// echo "</pre>";
 
 $params = [];
 foreach ($cart as $item) {
@@ -77,10 +77,10 @@ $farmaData = $consul_GeoLocation->fetchAll();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>calculando.</title>
 
-  <!-- <form id="form1" action="calculate2.php" method="POST"> -->
+  <form id="form1" action="calculate2.php" method="POST">
     <input name="farmaciaDistancia" id="farmaciaDistancia" hidden value="" />
     <input name="casaDireccion" id="casaDireccion" hidden value="" />
-  <!-- </form> -->
+  </form>
 
 
   <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
@@ -146,7 +146,7 @@ $farmaData = $consul_GeoLocation->fetchAll();
       }
 
       document.getElementById("farmaciaDistancia").value = JSON.stringify(farmaciaDistancia);
-      // document.getElementById("form1").submit();
+      document.getElementById("form1").submit();
     };
 
     start();
