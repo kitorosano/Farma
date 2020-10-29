@@ -498,9 +498,9 @@ if ($_POST) {
 						mapReturn.addObjects([routePolyline, startMarker, endMarker]);
 
 						// Que la vista del mapa se mueva para ver un pantallazo general de la ruta
-						mapReturn.getViewModel().setLookAtData({
-							bounds: routePolyline.getBoundingBox()
-						});
+						// mapReturn.getViewModel().setLookAtData({
+						// 	bounds: routePolyline.getBoundingBox()
+						// });
 
 					});
 
