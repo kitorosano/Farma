@@ -10,12 +10,6 @@ $consul_verifyuser = $pdo->prepare('SELECT * FROM usuarios WHERE ciusuario=?');
 $consul_verifyuser->execute(array($userCi));
 $result = $consul_verifyuser->fetch();
 
-echo "<pre>";
-print_r($_POST);
-print_r($userCi, $userPass);
-print_r($result);
-echo "</pre>";
-
 if (!$result) { //verificar result echo json_encode('error');
   $msg = 'No existe el usuario para iniciar la sesion';
   echo ($msg);

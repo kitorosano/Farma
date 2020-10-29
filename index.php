@@ -28,7 +28,7 @@
 
 			<!-- LOGO -->
 			<div class="container d-flex justify-content-center">
-				<a class="row mt-3" href="index.html">
+				<a class="row mt-3" href=".">
 					<img class="mb-1" src="images/Logo1.png" width="300" alt="">
 				</a>
 			</div>
