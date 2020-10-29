@@ -179,7 +179,7 @@
 									</button>
 								</div>
 								<div id="mapContainer" class="modal-body">
-									<div id="map" class="" style="width: fit-content;height: 400px"></div>
+									<div id="map" class="" style="height: 400px"></div>
 								</div>
 								<div class="modal-footer d-flex justify-content-between">
 									<div><button type="button" class="btn btn-danger" id="btnCancelarMap" data-dismiss="modal">Cancelar</button></div>
