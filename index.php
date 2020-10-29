@@ -163,7 +163,7 @@
 						<!-- Button trigger modal -->
 						<button type="button" id="btnVolver1" class="btn btn-link">Volver</button>
 						<div class="justify-content-end">
-							<button id="btnContinuar" class="btn btn-success" type="button" data-toggle="modal" data-target="#modalDireccion">Continuar</button>
+							<button id="btnContinuar" class="btn btn-success" type="button">Continuar</button>
 						</div>
 					</div>
 					<!--  -->
@@ -401,7 +401,7 @@
 				$("#userMenu").show(1500);
 			});
 
-			$("#btnContinuar").click(function(event) {
+			$("#btnContinuar").click(function(e) {
 				var form = document.getElementById('myform');
 				let inAñadirPass = Array.prototype.every.call($('.inAñadir'), elt => !elt.classList.contains('text-muted') || elt.value == '0');
 				if (inAñadirPass) {
@@ -425,10 +425,11 @@
 				}
 
 				if (form.checkValidity() === false || inAñadirPass) { //SI alguno es true, ya lanza el error
-					event.preventDefault()
-					event.stopPropagation()
+					e.preventDefault()
+					e.stopPropagation()
+				} else {
+					$('$modalDireccion').modal('show');
 				}
-				form.classList.add('was-validated')
 			});
 
 			let mapReturn, markerReturn, mapBehavior;
