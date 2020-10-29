@@ -216,7 +216,7 @@ if ($_POST) {
                                                     AND p.idpedido=?");
 											$consulDetPedidos->execute(array($eltPedido['idpedido']));
 											$fDetPedido = $consulDetPedidos->fetchAll();
-											print_r($fDetPedido);
+											// print_r($fDetPedido);
 
 											foreach ($fDetPedido as $eltDetPedido) : ?>
 												<tbody>
