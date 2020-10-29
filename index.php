@@ -613,10 +613,6 @@
 				fetch('login.php', {
 						method: 'POST',
 						body: datos,
-						headers: {
-							'Content-Type': 'application/json',
-							"Accept": "application/json"
-						}
 					})
 					.then(res => res.text())
 					.then(data => {
