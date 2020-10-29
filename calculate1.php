@@ -24,9 +24,6 @@ $client = $consulUserFarmacos->fetchAll();
 $_SESSION['userDir'] = $_POST['inAddress'];
 $_SESSION['userDirParse'] = json_decode($_POST['inAddressParse']);
 $_SESSION['count'] = $_POST['count'];
-// echo "<pre>";
-// print_r($_SESSION['userDirParse']->lat );
-// echo "</pre>";
 
 $cart = []; //solo cod de farmaco
 $cartMany = []; //CUAL cod del farmaco y CUANTA cantidad se selecciono
@@ -47,6 +44,9 @@ for ($i = 1; $i < $_SESSION['count']; $i++) { //Count empieza desde 1
 
 $_SESSION['cart'] = $cart;
 $_SESSION['cartMany'] = $cartMany;
+echo "<pre>";
+print_r($_SESSION['cartMany']);
+echo "</pre>";
 
 $params = [];
 foreach ($cart as $item) {
