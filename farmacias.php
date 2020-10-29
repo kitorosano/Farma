@@ -71,7 +71,7 @@ if ($_POST) {
 							<button class="btn btn-primary" type="submit">Entrar</button>
 						</div>
 					</form>
-					
+
 				</div>
 			</div>
 			<!-- FORMULARIOS -->
@@ -388,185 +388,178 @@ if ($_POST) {
 	<script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js" type="text/javascript" charset="utf-8"></script>
 
 	<?php if (isset($_SESSION['farma'])) : ?>
-	<script>
-		// MAPA
-		/* Se utilizo Here API. */
-		const platform = new H.service.Platform({
-				apikey
-			}),
-			defaultLayers = platform.createDefaultLayers(),
-			service = platform.getSearchService(),
-			router = platform.getRoutingService(null, 8);
+		<script>
+			// MAPA
+			/* Se utilizo Here API. */
+			const platform = new H.service.Platform({
+					apikey
+				}),
+				defaultLayers = platform.createDefaultLayers(),
+				service = platform.getSearchService(),
+				router = platform.getRoutingService(null, 8);
 
 
-		//Calcular la ruta mas corta en auto, entre 2 puntos, promesa
-		const calcularRoute = (start, finish) => {
-			return new Promise((resolve, reject) => {
-				const params = {
-					routingMode: "fast",
-					transportMode: "car",
-					origin: start[0] + "," + start[1],
-					destination: finish[0] + "," + finish[1],
-					return: "polyline"
-				};
-				router.calculateRoute(params, success => {
-					resolve(success.routes[0].sections);
-				}, error => {
-					reject(error);
+			//Calcular la ruta mas corta en auto, entre 2 puntos, promesa
+			const calcularRoute = (start, finish) => {
+				return new Promise((resolve, reject) => {
+					const params = {
+						routingMode: "fast",
+						transportMode: "car",
+						origin: start[0] + "," + start[1],
+						destination: finish[0] + "," + finish[1],
+						return: "polyline"
+					};
+					router.calculateRoute(params, success => {
+						resolve(success.routes[0].sections);
+					}, error => {
+						reject(error);
+					});
 				});
+			};
+		</script>
+		<script src="js/getMap.js"></script>
+		<script>
+			//TRANSICION DE BOTONES MENU
+			$("#btnBandeja").click(function() {
+				$("#farmaMenu").hide(1000);
+				$("#farmaPedido").fadeIn(2000);
 			});
-		};
-	</script>
-	<script src="js/getMap.js"></script>
-	<script>
-		//TRANSICION DE BOTONES MENU
-		$("#btnBandeja").click(function() {
-			$("#farmaMenu").hide(1000);
-			$("#farmaPedido").fadeIn(2000);
-		});
-		$("#btnVolver1").click(function() {
-			$("#farmaPedido").hide(300);
-			$("#farmaMenu").show(1500);
-		});
+			$("#btnVolver1").click(function() {
+				$("#farmaPedido").hide(300);
+				$("#farmaMenu").show(1500);
+			});
 
-		const enviar = which => {
-			let enviado = false,
-				boton = $('#enviar-' + which),
-				alert = $('#alert-' + which),
-				card = $('#heading-' + which),
-				text = $('#fecha-' + which);
+			const enviar = which => {
+				let enviado = false,
+					boton = $('#enviar-' + which),
+					alert = $('#alert-' + which),
+					card = $('#heading-' + which),
+					text = $('#fecha-' + which);
 
-			window.open('envio.php?id=' + which, '_blank');
-			enviado = true;
+				window.open('envio.php?id=' + which, '_blank');
+				enviado = true;
 
-			// console.log(which)
-			if (enviado) {
-				boton.addClass('d-none');
-				alert.removeClass('d-none');
-				card.addClass('bg-success');
-				text.removeClass('text-muted')
-				// card.prop('style', 'background-color: #green');
+				// console.log(which)
+				if (enviado) {
+					boton.addClass('d-none');
+					alert.removeClass('d-none');
+					card.addClass('bg-success');
+					text.removeClass('text-muted')
+					// card.prop('style', 'background-color: #green');
+				}
+
 			}
 
-		}
+			let mapReturn, markerReturn, routePolyline,
+				farmaIcon = '<svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-shop" fill="currentColor" xmlns="http://www.w3.org/2000/svg">' +
+				'<path fill-rule="evenodd" d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zM4 15h3v-5H4v5zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3zm3 0h-2v3h2v-3z"/>' +
+				'</svg>',
+				markerIcon = '<svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-geo" fill="currentColor" xmlns="http://www.w3.org/2000/svg">' +
+				'<path fill-rule="evenodd" d="M8 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.319 1.319 0 0 0-.37.265.301.301 0 0 0-.057.09V14l.002.008a.147.147 0 0 0 .016.033.617.617 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.619.619 0 0 0 .146-.15.148.148 0 0 0 .015-.033L12 14v-.004a.301.301 0 0 0-.057-.09 1.318 1.318 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465-1.281 0-2.462-.172-3.34-.465-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411z"/>' +
+				'</svg>';
+			$('#mapaModal').on('shown.bs.modal', async event => {
+				let button = $(event.relatedTarget), // Button that triggered the modal
+					data = button.data('where').split(','),
+					latlng = [<?php echo json_encode($data['fgeolat']) ?>, <?php echo json_encode($data['fgeolng']) ?>];
+				// console.log(data);
 
-		let mapReturn, markerReturn, routePolyline;
-		$('#mapaModal').on('shown.bs.modal', async event => {
-			let button = $(event.relatedTarget), // Button that triggered the modal
-				data = button.data('where').split(','),
-				latlng = [<?php echo json_encode($data['fgeolat']) ?>, <?php echo json_encode($data['fgeolng']) ?>];
-			// console.log(data);
+				if (!mapReturn) {
+					mapReturn = mapStart(data);
+				}
 
-			if (!mapReturn) {
-				mapReturn = mapStart(data);
+				if (!routePolyline) {
+					// Obtener la ruta
+					routeOfLocals = await calcularRoute(latlng, data);
+					console.log(routeOfLocals);
 
-				const farmaIcon = '<svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-shop" fill="currentColor" xmlns="http://www.w3.org/2000/svg">' +
-					'<path fill-rule="evenodd" d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zM4 15h3v-5H4v5zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3zm3 0h-2v3h2v-3z"/>' +
-					'</svg>';
-				mapReturn.addObject(new H.map.Marker({
-					lat: latlng[0],
-					lng: latlng[1],
-				}, {
-					icon: new H.map.Icon(farmaIcon)
-				}));
-			}
+					// Mostrar en el mapa la ruta encontrada
+					routeOfLocals.forEach(section => {
+						let lineString = H.geo.LineString.fromFlexiblePolyline(section.polyline);
+						routePolyline = new H.map.Polyline(
+							lineString, {
+								style: {
+									strokeColor: 'blue',
+									lineWidth: 5
+								}
+							});
 
-			if (!markerReturn) {
-				const markerIcon = '<svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-geo" fill="currentColor" xmlns="http://www.w3.org/2000/svg">' +
-					'<path fill-rule="evenodd" d="M8 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.319 1.319 0 0 0-.37.265.301.301 0 0 0-.057.09V14l.002.008a.147.147 0 0 0 .016.033.617.617 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.619.619 0 0 0 .146-.15.148.148 0 0 0 .015-.033L12 14v-.004a.301.301 0 0 0-.057-.09 1.318 1.318 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465-1.281 0-2.462-.172-3.34-.465-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411z"/>' +
-					'</svg>';
-				// Marcador DIRECCION DEL CLIENTE
-				markerReturn = new H.map.Marker({
-					lat: data[0],
-					lng: data[1],
-				}, {
-					icon: new H.map.Icon(markerIcon)
-				});
 
-				mapReturn.addObject(markerReturn);
-			}
-
-			if (!routePolyline) {
-				// Obtener la ruta
-				routeOfLocals = await calcularRoute(latlng, data);
-
-				// Mostrar en el mapa la ruta encontrada
-				routeOfLocals.forEach(section => {
-					let lineString = H.geo.LineString.fromFlexiblePolyline(section.polyline);
-					routePolyline = new H.map.Polyline(
-						lineString, {
-							style: {
-								strokeColor: 'blue',
-								lineWidth: 5
-							}
+						// Create a marker for the start point:
+						let startMarker = new H.map.Marker(section.departure.place.location, {
+							icon: new H.map.Icon(farmaIcon)
 						});
 
-					// Añadir al mapa lo encontrado y a mostrar
-					mapReturn.addObject(routePolyline);
+						// Create a marker for the end point:
+						let endMarker = new H.map.Marker(section.arrival.place.location, {
+							icon: new H.map.Icon(markerIcon)
+						});
 
-					// Que la vista del mapa se mueva para ver un pantallazo general de la ruta
-					mapReturn.getViewModel().setLookAtData({
-						bounds: routePolyline.getBoundingBox()
+						// Añadir al mapa lo encontrado y a mostrar
+						mapReturn.addObjects([routePolyline, startMarker, endMarker]);
+
+						// Que la vista del mapa se mueva para ver un pantallazo general de la ruta
+						mapReturn.getViewModel().setLookAtData({
+							bounds: routePolyline.getBoundingBox()
+						});
+
 					});
 
-				});
+
+				}
 
 
+
+			});
+
+			const closeModal = () => {
+				mapReturn.removeObjects([markerReturn, routePolyline]);
+				markerReturn = null, routePolyline = null;
 			}
 
 
+			//TRANSICION DE BOTONES MENU
+			$("#btnStock").click(function() {
+				$("#farmaMenu").hide(1000);
+				$("#farmaStock").fadeIn(2000);
+			});
+			$("#btnVolver2").click(function() {
+				$("#farmaStock").hide(300);
+				$("#farmaMenu").show(1500);
+			});
 
-		});
-
-		const closeModal = () => {
-			mapReturn.removeObjects([markerReturn, routePolyline]);
-			markerReturn = null, routePolyline = null;
-		}
-
-
-		//TRANSICION DE BOTONES MENU
-		$("#btnStock").click(function() {
-			$("#farmaMenu").hide(1000);
-			$("#farmaStock").fadeIn(2000);
-		});
-		$("#btnVolver2").click(function() {
-			$("#farmaStock").hide(300);
-			$("#farmaMenu").show(1500);
-		});
-
-		const handleEditar = (which) => {
-			let botones = $('.cantidad-' + which),
-				label = $('#cantidadLabel-' + which),
-				editar = document.getElementById('btnEditar-' + which),
-				input = document.getElementById('stock-' + which);
+			const handleEditar = (which) => {
+				let botones = $('.cantidad-' + which),
+					label = $('#cantidadLabel-' + which),
+					editar = document.getElementById('btnEditar-' + which),
+					input = document.getElementById('stock-' + which);
 
 
-			if (botones[0].classList.contains('d-none')) {
-				// ABRIR EDITAR 
-				botones.removeClass('d-none');
-				label.addClass('d-none')
+				if (botones[0].classList.contains('d-none')) {
+					// ABRIR EDITAR 
+					botones.removeClass('d-none');
+					label.addClass('d-none')
 
-				editar.innerText = "Cancelar";
+					editar.innerText = "Cancelar";
 
-			} else {
-				// CERRAR EDITAR- ENVIO FORM
-				botones.addClass('d-none');
-				label.removeClass('d-none');
+				} else {
+					// CERRAR EDITAR- ENVIO FORM
+					botones.addClass('d-none');
+					label.removeClass('d-none');
 
-				editar.innerText = "Editar";
+					editar.innerText = "Editar";
+				}
 			}
-		}
 
-		const stockMenos = which => {
-			let input = document.getElementById("stock-" + which);
-			input.value = parseInt(input.value) - 1;
-		}
+			const stockMenos = which => {
+				let input = document.getElementById("stock-" + which);
+				input.value = parseInt(input.value) - 1;
+			}
 
-		const stockMas = which => {
-			let input = document.getElementById("stock-" + which);
-			input.value = parseInt(input.value) + 1;
-		}
-	</script>
+			const stockMas = which => {
+				let input = document.getElementById("stock-" + which);
+				input.value = parseInt(input.value) + 1;
+			}
+		</script>
 	<?php else : ?>
 		<script>
 			let formulario = document.getElementById('formLogin');
