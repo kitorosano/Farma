@@ -142,7 +142,7 @@
 						<?php $count++;
 						endforeach ?>
 						<input id="count" type="hidden" name="count" value="<?php echo $count; ?>">
-						<div class="invalid-feedback col-md-12 errorDiv">
+						<div id="errorDiv" class="invalid-feedback col-md-12 ">
 							* Asegurate de AÑADIR una cantidad del farmaco a pedir
 						</div>
 					</div>
@@ -151,7 +151,7 @@
 					<div class="form-group mt-3">
 						<label for="inAddress">Dirección a llevar:</label>
 						<input type="text" class="form-control" name="inAddress" id="inAddress" placeholder="Colon 1224" required>
-						<div class="invalid-feedback errorDiv">
+						<div class="invalid-feedback">
 							* Porfavor, ingrese la direccion a la cual sera enviado el pedido.
 						</div>
 						<input type="hidden" name="inAddressParse" id="inAddressParse">
@@ -417,7 +417,7 @@
 					}
 				} else {
 
-					$('.errorDiv').attr('style', 'display: none')
+					$('#errorDiv').attr('style', 'display: none')
 
 					for (let i = 1; i < <?php echo $count; ?>; i++) {
 						$('#cardFarmaco-' + i).removeClass('border-danger').addClass('border-success');
@@ -428,7 +428,7 @@
 					e.preventDefault()
 					e.stopPropagation()
 				} else {
-					$('$modalDireccion').modal('show');
+					$('#modalDireccion').modal('show');
 				}
 			});
 
