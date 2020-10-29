@@ -2,7 +2,7 @@
 
 const mapStart = () => {
 
-  const map = new H.Map(
+  let map = new H.Map(
     document.getElementById("map"),
     defaultLayers.vector.normal.map,
     {

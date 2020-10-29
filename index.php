@@ -323,7 +323,7 @@
 	<!-- COPYRIGHT -->
 	<footer>
 		<p id="copyr" style="font-size: 1rem">&copy; Farma <script>
-				document.getElementById('copyr').innerText += ' '+ new Date().getFullYear()
+				document.getElementById('copyr').innerText += ' ' + new Date().getFullYear()
 			</script>
 		</p>
 	</footer>
@@ -352,6 +352,22 @@
 				defaultLayers = platform.createDefaultLayers(),
 				service = platform.getSearchService(),
 				router = platform.getRoutingService(null, 8);
+
+			let map = new H.Map(
+				document.getElementById("map"),
+				defaultLayers.vector.normal.map, {
+					center: {
+						lat: -32,
+						lng: -58
+					},
+					zoom: 14,
+				}
+			);
+
+			const ui = H.ui.UI.createDefault(map, defaultLayers);
+			ui.getControl("mapsettings").setDisabled(true).setVisibility(false);
+			ui.getControl("zoom").setAlignment("bottom-right");
+			ui.getControl("scalebar").setAlignment("bottom-right");
 
 			// direc to geo
 			const geocoder = (query) => {
@@ -436,10 +452,10 @@
 				let from = await geocoder($('#inAddress').val());
 				document.getElementById("inAddressParse").value = JSON.stringify(from);
 
-				if (!mapReturn) {
-					mapReturn = mapStart();
-					mapBehavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(mapReturn));
-				}
+				// if (!mapReturn) {
+				// 	mapReturn = mapStart();
+				// 	mapBehavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(mapReturn));
+				// }
 
 				markerReturn = marker(from);
 				// console.log(markerReturn.getGeometry());
@@ -616,7 +632,6 @@
 					})
 					.then(res => res.text())
 					.then(data => {
-						console.log(data);
 						if (data !== 'login') {
 							respuesta.innerHTML = (`
 						<div class="alert alert-danger" role="alert">
