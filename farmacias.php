@@ -495,12 +495,12 @@ if ($_POST) {
 						});
 
 						// Añadir al mapa lo encontrado y a mostrar
-						mapReturn.addObjects([routePolyline, startMarker, endMarker]);
+						mapReturn.addObjects([startMarker, endMarker]);
 
 						// Que la vista del mapa se mueva para ver un pantallazo general de la ruta
-						// mapReturn.getViewModel().setLookAtData({
-						// 	bounds: routePolyline.getBoundingBox()
-						// });
+						mapReturn.getViewModel().setLookAtData({
+							bounds: routePolyline.getBoundingBox()
+						});
 
 					});
 
