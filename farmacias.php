@@ -224,8 +224,8 @@ if ($_POST) {
 														<td class="text-center align-middle"><?php echo $eltDetPedido['codfarmaco']; ?></td>
 														<td class="text-center align-middle"><?php echo $eltDetPedido['nombrefarmaco']; ?></td>
 														<td class="text-center align-middle"><?php echo $eltDetPedido['nombresugerido']; ?></td>
-														<td class="text-right align-middle">$ <?php echo ($eltDetPedido['precio'] / $eltDetPedido['cantidad']); ?></td>
-														<td class="text-center align-middle"><?php echo $eltDetPedido['cantidad']; ?></td>
+														<td class="text-right align-middle">$ <?php echo ($eltDetPedido['precio'] / $eltDetPedido['many']); ?></td>
+														<td class="text-center align-middle"><?php echo $eltDetPedido['many']; ?></td>
 														<td class="text-right align-middle">$ <?php echo $eltDetPedido['precio']; ?></td>
 													</tr>
 												</tbody>

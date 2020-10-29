@@ -12,10 +12,13 @@ $consul_verifyuser->execute(array($userCi));
 $result = $consul_verifyuser->fetch();
 
 if (!$result) { //verificar result echo json_encode('error');
-  echo json_encode('No existe el usuario para iniciar la sesion');
-} else if (password_verify($userPass, $result['contrasenausuario'])) {
+  $msg = 'No existe el usuario para iniciar la sesion';
+  echo ($msg);
+} elseif (password_verify($userPass, $result['contrasenausuario'])) {
   $_SESSION['user'] = $userCi;
-  echo json_encode("login");
+  $msg = 'login';
+  echo ($msg);
 } else {  
-  echo json_encode('Contraseña incorrecta!');
-}
+  $msg = 'Contraseña incorrecta!';
+  echo ($msg);
+};

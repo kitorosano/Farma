@@ -142,7 +142,7 @@
 						<?php $count++;
 						endforeach ?>
 						<input id="count" type="hidden" name="count" value="<?php echo $count; ?>">
-						<div id="errorDiv" class="invalid-feedback col-md-12">
+						<div class="invalid-feedback col-md-12 errorDiv">
 							* Asegurate de AÑADIR una cantidad del farmaco a pedir
 						</div>
 					</div>
@@ -150,8 +150,8 @@
 					<!-- DIRECCION -->
 					<div class="form-group mt-3">
 						<label for="inAddress">Dirección a llevar:</label>
-						<input type="text" class="form-control" name="inAddress" id="inAddress" placeholder="Roger Balet 2186" required>
-						<div class="invalid-feedback">
+						<input type="text" class="form-control" name="inAddress" id="inAddress" placeholder="Colon 1224" required>
+						<div class="invalid-feedback errorDiv">
 							* Porfavor, ingrese la direccion a la cual sera enviado el pedido.
 						</div>
 						<input type="hidden" name="inAddressParse" id="inAddressParse">
@@ -322,8 +322,8 @@
 
 	<!-- COPYRIGHT -->
 	<footer>
-		<p style="font-size: 1rem">&copy; Farma <script>
-				document.write(new Date().getFullYear())
+		<p id="copyr" style="font-size: 1rem">&copy; Farma <script>
+				document.getElementById('copyr').innerText += ' '+ new Date().getFullYear()
 			</script>
 		</p>
 	</footer>
@@ -407,7 +407,7 @@
 				if (inAñadirPass) {
 					// console.log(inAñadirPass)
 
-					$('#errorDiv')[0].style.display = "block";
+					$('.errorDiv').attr('style', 'display: block')
 
 					for (let i = 1; i < <?php echo $count; ?>; i++) {
 						if ($('#cardFarmaco-' + i)[0].classList.contains('border-dark') ||
@@ -417,7 +417,7 @@
 					}
 				} else {
 
-					$('#errorDiv')[0].style.display = "none";
+					$('.errorDiv').attr('style', 'display: none')
 
 					for (let i = 1; i < <?php echo $count; ?>; i++) {
 						$('#cardFarmaco-' + i).removeClass('border-danger').addClass('border-success');
@@ -480,7 +480,7 @@
 					}
 				}, false);
 
-				
+
 				$('#btnConfirmMap').prop('disabled', false)
 			});
 
@@ -605,19 +605,23 @@
 			let formulario = document.getElementById('formLogin');
 			let respuesta = document.getElementById('respuesta');
 
-			formulario.addEventListener('submit', function(e) {
+			formulario.addEventListener('submit', (e) => {
 				e.preventDefault(); //evita procesar el form al url
 
 				let datos = new FormData(formulario);
 
 				fetch('login.php', {
 						method: 'POST',
-						body: datos
+						body: datos,
+						headers: {
+							'Content-Type': 'application/json',
+							"Accept": "application/json"
+						}
 					})
-					.then(res => res.json())
+					.then(res => res.text())
 					.then(data => {
 						console.log(data);
-						if (data !== "login") {
+						if (data !== 'login') {
 							respuesta.innerHTML = (`
 						<div class="alert alert-danger" role="alert">
 							${data}
