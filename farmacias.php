@@ -470,18 +470,12 @@ if ($_POST) {
 				if (!routePolyline) {
 					// Obtener la ruta
 					routeOfLocals = await calcularRoute(latlng, data);
-					console.log(routeOfLocals);
+					console.log(routeOfLocals)
 
 					// Mostrar en el mapa la ruta encontrada
 					routeOfLocals.forEach(section => {
 						let lineString = H.geo.LineString.fromFlexiblePolyline(section.polyline);
-						routePolyline = new H.map.Polyline(
-							lineString, {
-								style: {
-									strokeColor: 'blue',
-									lineWidth: 5
-								}
-							});
+						routePolyline = new H.map.Polyline(lineString);
 
 
 						// Create a marker for the start point:
@@ -495,7 +489,7 @@ if ($_POST) {
 						});
 
 						// Añadir al mapa lo encontrado y a mostrar
-						mapReturn.addObjects([startMarker, endMarker]);
+						mapReturn.addObjects([routePolyline, startMarker, endMarker]);
 
 						// Que la vista del mapa se mueva para ver un pantallazo general de la ruta
 						mapReturn.getViewModel().setLookAtData({
