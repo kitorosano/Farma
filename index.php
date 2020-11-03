@@ -31,6 +31,7 @@
 				<a class="row mt-3" href=".">
 					<img class="mb-1" src="images/Logo1.png" width="300" alt="">
 				</a>
+					<img class="mb-1" src="images/QR.png" width="400" height="400" alt="">
 			</div>
 			<!-- END LOGO -->
 
@@ -60,14 +61,7 @@
 				</div>
 			</div>
 			<!-- FORMULARIOS -->
-		
-			<!-- LOGO -->
-			<div class="container d-flex justify-content-center">
-				<p> Nuestra app: </p>
-				<img class="mb-1" src="images/QR.png" width="100" alt="">
-				</a>
-			</div>
-			<!-- END LOGO -->
+
 
 		</section>
 	<?php endif ?>
