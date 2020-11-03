@@ -37,7 +37,7 @@
 			<!-- FORMULARIOS -->
 			<div class="login mx-auto" style="width: 500px;">
 				<div class="container shadow p-4 mb-2 bg-white rounded">
-
+				
 					<h4 class="mb-4">Inicio de Sesion</h4>
 					<form id="formLogin">
 
@@ -60,6 +60,14 @@
 				</div>
 			</div>
 			<!-- FORMULARIOS -->
+		
+			<!-- LOGO -->
+			<div class="container d-flex justify-content-center">
+				<p> Nuestra app: </p>
+				<img class="mb-1" src="images/QR.png" width="100" alt="">
+				</a>
+			</div>
+			<!-- END LOGO -->
 
 		</section>
 	<?php endif ?>
