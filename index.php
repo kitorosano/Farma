@@ -61,9 +61,9 @@
 			</div>
 			<!-- FORMULARIOS -->
 
-			<div style="position: absolute; bottom: 0; top: 0; right: 0;">
+			<div style="position: absolute; bottom: 0; top: 30; right: 0;">
 					<img class="mb-1 ml-2" style="align-self: center;" src="images/QR.png" width="100" height="100" alt="">
-					<p>Quieres pobrar nuestra app?</p>
+					<p class="mr-3">Quieres pobrar nuestra app?</p>
 			</div>
 
 		</section>
