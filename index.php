@@ -31,15 +31,17 @@
 				<a class="row mt-3" href=".">
 					<img class="mb-1" src="images/Logo1.png" width="300" alt="">
 				</a>
+				<div>
 					<img class="mb-1 ml-2" style="align-self: center;" src="images/QR.png" width="100" height="100" alt="">
 					<p>Quieres pobrar nuestra app?</p>
+				</div>
 			</div>
 			<!-- END LOGO -->
 
 			<!-- FORMULARIOS -->
 			<div class="login mx-auto" style="width: 500px;">
 				<div class="container shadow p-4 mb-2 bg-white rounded">
-				
+
 					<h4 class="mb-4">Inicio de Sesion</h4>
 					<form id="formLogin">
 
@@ -326,7 +328,7 @@
 	<!-- COPYRIGHT -->
 	<footer>
 		<p id="copyr" style="font-size: 1rem">&copy; Farma <script>
-				document.getElementById('copyr').innerText += ' '+ new Date().getFullYear()
+				document.getElementById('copyr').innerText += ' ' + new Date().getFullYear()
 			</script>
 		</p>
 	</footer>
