@@ -31,7 +31,8 @@
 				<a class="row mt-3" href=".">
 					<img class="mb-1" src="images/Logo1.png" width="300" alt="">
 				</a>
-					<img class="mb-1" style="align-self: center;" src="images/QR.png" width="100" height="100" alt="">
+					<img class="mb-1 ml-2" style="align-self: center;" src="images/QR.png" width="100" height="100" alt="">
+					<p>Quieres pobrar nuestra app?</p>
 			</div>
 			<!-- END LOGO -->
 
