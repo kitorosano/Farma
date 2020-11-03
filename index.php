@@ -31,7 +31,7 @@
 				<a class="row mt-3" href=".">
 					<img class="mb-1" src="images/Logo1.png" width="300" alt="">
 				</a>
-					<img class="mb-1" src="images/QR.png" width="100" height="100" alt="">
+					<img class="mb-1" style="align-self: center;" src="images/QR.png" width="100" height="100" alt="">
 			</div>
 			<!-- END LOGO -->
 
